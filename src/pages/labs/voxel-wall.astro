@@ -1,0 +1,35 @@
+---
+// Lab 02 — voxel-wall (ticket 09): physics demolition with a reusable loop player.
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const description =
+	'Lab 02 — voxel-wall: a floating sphere demolishes a voxel wall under Rapier physics; the take is baked and replays on a loop player with scrub. Rendered webgpu-first, fallback webgl.';
+---
+
+<LabLayout
+	num="02"
+	name="voxel-wall"
+	suffix="physics&#8202;·&#8202;rapier&#8202;·&#8202;beta"
+	description={description}
+	player
+/>
+
+<script>
+	// the shell owns the renderer lifecycle; the page mounts the scene and the player bar
+	import { mountLab } from '../../labs/shell';
+	import { createVoxelWallScene } from '../../labs/voxel-wall';
+	import { mountPlayerUI } from '../../labs/player';
+
+	const scene = createVoxelWallScene();
+	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, scene);
+
+	// the bar mounts once the bake resolves (sub-second); skipped in ?static capture mode
+	document.addEventListener('astro:page-load', () => {
+		const slot = document.querySelector<HTMLElement>('[data-lab-player-slot]');
+		const phaseEl = document.querySelector<HTMLElement>('[data-lab-phase]');
+		if (!slot || new URLSearchParams(location.search).has('static')) return;
+		scene.player
+			.then((player) => mountPlayerUI(slot, player, { phaseEl }))
+			.catch(() => {}); // the shell's failure line already reports bake failures
+	});
+</script>
