@@ -74,8 +74,13 @@ export const VOXEL_WALL = {
 		rim: { intensity: 2, position: [-11, -4, -9] },
 	} satisfies LightRigConfig,
 
-	/** Fixed cinematic 3/4 on the wall's mid height. */
+	/** Fixed cinematic framing on the wall's mid height. Camera mode is orthographic —
+	 * no foreshortening, editor-flat: an experiment to see the demolition as a diagram. */
 	camera: {
+		mode: 'orthographic' as const,
+		/** Half-extent of the ortho view, u: sized to keep the wall (9×5) and the approach
+		 * legible without dead space. Tune alongside `position`. */
+		orthographicSize: 15,
 		position: [11, 6.5, 14.5],
 		target: [0, 2.2, 0],
 	},

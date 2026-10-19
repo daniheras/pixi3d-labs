@@ -77,6 +77,8 @@ export function createVoxelWallScene(): VoxelWallLab {
 			});
 			view.root.addChild(sphereMesh);
 
+			view.camera.mode = VOXEL_WALL.camera.mode;
+			if (VOXEL_WALL.camera.mode === 'orthographic') view.camera.orthographicSize = VOXEL_WALL.camera.orthographicSize;
 			view.camera.position.set(...VOXEL_WALL.camera.position);
 			view.camera.lookAt({
 				x: VOXEL_WALL.camera.target[0],
