@@ -146,6 +146,7 @@ The page's one component: a full-bleed flex row — numeral chip, poster name, s
 - **Hover / Focus:** full-bleed Signal Red band; name and suffix flip to ink (suffix at 0.92 alpha over red — ≥4.5:1); chip inverts to ink with bright-red numeral; `:focus-visible` shares the exact inversion plus a 1px dashed outline; `:hover` is gated behind `(hover: hover) and (pointer: fine)` — focus and the standing demo state are not
 - **Press:** `:active` answers without moving the band — chip `scale(0.94)`, name `opacity: 0.85`, `140ms var(--ease-out)` (press-feedback tier: 100–160ms)
 - **Entrance:** on load the page reads top to bottom — intro, then rows (60ms stagger), then the status line; each fades in with an 8px rise, `360ms var(--ease-out)`; the ghost watermark fades only (500ms). Reduced motion: opacity-only, 200ms, no stagger
+- **Keyboard:** `↑/↓` moves the standing inversion — and real browser focus — across the rows, cycling infinitely (wraps both ends); the block cursor travels with the active row; Enter opens it through the link's native activation (this is what the status line's `↵ open` promises). The `:focus-visible` dashed rules frame the active band.
 - **Standing state:** the last row may rest in its inverted state ("demo"), with a blinking block cursor after its suffix
 
 ### Numeral Chip

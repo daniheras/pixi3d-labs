@@ -19,7 +19,7 @@ World pinned by the user: Omarchy/TUI-inspired — near-black warm ground (#0b09
 
 ## Chosen direction
 
-**Editorial Mono Index — bolder** (user-locked after a 3-hand tournament). Typography at poster scale is the whole interface: two ~88-96px index rows (`01 hello-cube`, `02 2d3d-hybrid`), numerals set in solid red squares, full-bleed inverse-video hover (red bar, near-black text), ghost outline "3D" watermark, pinned status line. Memorable moment: the full-bleed red inversion on hover.
+**Editorial Mono Index — bolder** (user-locked after a 3-hand tournament). Typography at poster scale is the whole interface: two ~88-96px index rows (`01 hello-cube`, `02 2d3d-hybrid`), numerals set in solid red squares, full-bleed inverse-video hover (red bar, near-black text), ghost outline "3D" watermark, pinned status line. Memorable moment: the full-bleed red inversion on hover. `↑/↓` cycles the standing inversion across rows infinitely (focus follows; Enter opens natively).
 
 ## Direction contract
 

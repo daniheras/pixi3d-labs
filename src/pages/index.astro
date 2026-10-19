@@ -47,11 +47,11 @@ const githubUrl = 'https://github.com/daniheras';
 			<h1 class="sr-only">pixijs-3d-labs — hands-on labs for the PixiJS 3D beta</h1>
 			{
 				labs.map((lab, i) => (
-					<a class:list={['row', { demo: i === labs.length - 1 }]} style={`animation-delay: ${60 + i * 60}ms`} href={lab.href}>
+					<a class:list={['row', { demo: i === labs.length - 1 }]} style={`animation-delay: ${60 + i * 60}ms`} href={lab.href} data-row={i}>
 						<span class="num" aria-hidden="true">{lab.num}</span>
 						<h2 class="name">{lab.name}</h2>
-						<span class="suffix">{lab.suffix}&nbsp;</span>
-						{i === labs.length - 1 && <span class="cursor" aria-hidden="true" />}
+						<span class="suffix">{lab.suffix}</span>
+						<span class="cursor" aria-hidden="true"></span>
 					</a>
 				))
 			}
@@ -277,14 +277,17 @@ const githubUrl = 'https://github.com/daniheras';
 		}
 
 		/* cursor */
+		/* cursor: one per row, shown only on the active (demo) row */
 		.cursor {
-			display: inline-block;
+			display: none;
 			width: 0.55em;
 			height: 1em;
+			margin-left: 1ch;
 			background: var(--red);
 			animation: blink 1.1s steps(1) infinite;
 		}
 		.demo .cursor {
+			display: inline-block;
 			background: #0b0908;
 		}
 		@keyframes blink {
@@ -387,3 +390,29 @@ const githubUrl = 'https://github.com/daniheras';
 		}
 	</style>
 </html>
+
+<script>
+	// Arrow keys move the standing inversion (and real focus) across the index
+	// rows, cycling infinitely. Enter then opens the focused lab natively.
+	const rows = [...document.querySelectorAll<HTMLAnchorElement>('a.row')];
+
+	function focusRow(index: number) {
+		const row = rows[(index + rows.length) % rows.length];
+		for (const r of rows) r.classList.remove('demo');
+		row.classList.add('demo');
+		row.focus();
+	}
+
+	document.addEventListener('keydown', (e) => {
+		const t = document.activeElement;
+		if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || (t as HTMLElement).isContentEditable)) {
+			return;
+		}
+		if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+
+		const current = rows.findIndex((r) => r.classList.contains('demo'));
+		const delta = e.key === 'ArrowDown' ? 1 : -1;
+		focusRow((current === -1 ? 0 : current) + delta);
+		e.preventDefault();
+	});
+</script>
