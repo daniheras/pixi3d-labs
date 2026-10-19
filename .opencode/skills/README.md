@@ -20,6 +20,8 @@ git clone https://github.com/mattpocock/skills.git /tmp/mattpocock-skills
 
 Run `/setup-matt-pocock-skills` once to configure the issue tracker, triage labels, and domain doc layout that the engineering skills assume.
 
+The 16 user-invoked skills are also exposed as `/matt:<name>` commands (e.g. `/matt:implement`), defined in `.opencode/opencode.jsonc`.
+
 ## Impeccable
 
 The `impeccable` skill is installed and updated through its own installer, not vendored by hand.

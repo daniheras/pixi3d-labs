@@ -1,0 +1,69 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "commands": {
+    "matt:ask-matt": {
+      "description": "Router over the user-invoked skills: which skill or flow fits",
+      "template": "Use the skill tool to load the \"ask-matt\" skill and follow its instructions."
+    },
+    "matt:grill-me": {
+      "description": "Relentless interview to sharpen a plan or design (stateless)",
+      "template": "Use the skill tool to load the \"grill-me\" skill and follow its instructions."
+    },
+    "matt:grill-with-docs": {
+      "description": "Grilling session that also builds the project's domain model",
+      "template": "Use the skill tool to load the \"grill-with-docs\" skill and follow its instructions."
+    },
+    "matt:handoff": {
+      "description": "Compact the conversation into a portable handoff document",
+      "template": "Use the skill tool to load the \"handoff\" skill and follow its instructions."
+    },
+    "matt:implement": {
+      "description": "Build the work described by a spec or set of tickets",
+      "template": "Use the skill tool to load the \"implement\" skill and follow its instructions."
+    },
+    "matt:implement-spec": {
+      "description": "Implement a whole spec on one integration branch",
+      "template": "Use the skill tool to load the \"implement-spec\" skill and follow its instructions."
+    },
+    "matt:improve-codebase-architecture": {
+      "description": "Scan for deepening opportunities and pick one",
+      "template": "Use the skill tool to load the \"improve-codebase-architecture\" skill and follow its instructions."
+    },
+    "matt:retro": {
+      "description": "Suggest improvements to the agent environment after a session",
+      "template": "Use the skill tool to load the \"retro\" skill and follow its instructions."
+    },
+    "matt:setup-matt-pocock-skills": {
+      "description": "Configure this repo for the engineering skills (run once)",
+      "template": "Use the skill tool to load the \"setup-matt-pocock-skills\" skill and follow its instructions."
+    },
+    "matt:teach": {
+      "description": "Teach a concept over multiple sessions",
+      "template": "Use the skill tool to load the \"teach\" skill and follow its instructions."
+    },
+    "matt:to-questionnaire": {
+      "description": "Turn a decision into a questionnaire for someone else",
+      "template": "Use the skill tool to load the \"to-questionnaire\" skill and follow its instructions."
+    },
+    "matt:to-spec": {
+      "description": "Turn the current conversation into a spec",
+      "template": "Use the skill tool to load the \"to-spec\" skill and follow its instructions."
+    },
+    "matt:to-tickets": {
+      "description": "Break a plan/spec into tracer-bullet tickets",
+      "template": "Use the skill tool to load the \"to-tickets\" skill and follow its instructions."
+    },
+    "matt:triage": {
+      "description": "Move issues through triage roles",
+      "template": "Use the skill tool to load the \"triage\" skill and follow its instructions."
+    },
+    "matt:wait-what": {
+      "description": "Re-pitch a message that didn't land",
+      "template": "Use the skill tool to load the \"wait-what\" skill and follow its instructions."
+    },
+    "matt:wayfinder": {
+      "description": "Plan a huge chunk of work as a map of decision tickets",
+      "template": "Use the skill tool to load the \"wayfinder\" skill and follow its instructions."
+    }
+  }
+}
