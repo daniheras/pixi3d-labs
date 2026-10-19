@@ -1,0 +1,46 @@
+{
+  "title": "Choose the lab page structure",
+  "question": "The roll assigned Instrument Bench. Keep it, take an alternate, or re-roll. Every hand hosts the demo in a 4:3 framed viewport (your pinned norm).",
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "Instrument Bench",
+      "kicker": "THE ROLL",
+      "lineage": "oscilloscope graticules and lab benches",
+      "thesis": "The lab page is a bench: the 4:3 screen set center-stage, corner-ticked in red, all chrome reduced to two hairline rules.",
+      "palette": ["#0b0908", "#e5483c", "#d8cfc7", "#8a7e76", "#2a1f1a"],
+      "materials": ["hairline rules", "red corner ticks", "phosphor mono"],
+      "viewport": "Two hairline rules (top: back + source; bottom: status) frame the page; the corner-ticked 4:3 viewport holds the live cube at center.",
+      "risk": "Reads instrument-costume if the ticks decorate instead of frame.",
+      "html": ".impeccable/mocks/decision/instrument-bench.html"
+    },
+    {
+      "id": "gallery-plate",
+      "kind": "dealt",
+      "label": "Gallery Plate",
+      "lineage": "hung plates in a print folio",
+      "thesis": "The demo hangs like a plate: a double-hairline 4:3 frame, an engraved caption line beneath, and nothing else on the wall.",
+      "palette": ["#0b0908", "#e5483c", "#d8cfc7", "#8a7e76", "#2a1f1a"],
+      "materials": ["double hairline", "red numeral chip", "ghost numeral"],
+      "viewport": "Centered double-rule 4:3 frame over a caption row (red chip, name, suffix); ghost numeral behind; status line pinned at the bottom edge.",
+      "risk": "So quiet it could be any minimal portfolio; the caption must carry the voice.",
+      "html": ".impeccable/mocks/decision/gallery-plate.html"
+    },
+    {
+      "id": "standing-row",
+      "kind": "dealt",
+      "label": "Standing Row",
+      "lineage": "the index's own inverse-video row",
+      "thesis": "The row you clicked never left: the lab opens with its index row standing inverted, the framed 4:3 demo beneath it.",
+      "palette": ["#0b0908", "#e5483c", "#d8cfc7", "#8a7e76", "#2a1f1a"],
+      "materials": ["full-bleed inverse band", "blinking block cursor", "red-ruled frame"],
+      "viewport": "Full-bleed red band (chip, name, suffix, blinking cursor, back + source) over the red-ruled 4:3 frame; status line pinned bottom.",
+      "risk": "A full red band on load competes with the demo for first glance.",
+      "html": ".impeccable/mocks/decision/standing-row.html"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "steer": true,
+  "buildPath": { "value": "code" }
+}

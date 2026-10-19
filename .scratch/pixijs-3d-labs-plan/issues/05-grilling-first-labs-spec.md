@@ -36,3 +36,7 @@ Decided in a grilling session (2026-10-19; 13 questions in two rounds, all recom
 - **Motion policy (both labs)**: under reduced motion the scene renders but does not animate — a static frame at pose zero. That same pose-zero frame is the `?static` capture frame, keeping preview screenshots deterministic.
 - **Spec precision**: shape and constraints are decided here; the recorded values (rotation speeds, intensities, camera positions) are starting values — implementation owns the decimals without revisiting this ticket.
 - **Lab numbering**: hello-cube is lab 01 (already so in the prototype); views-in-2d is lab 02.
+
+## Comments
+
+- **2026-10-19** — Lab 02 (views-in-2d) is superseded by ticket 09: lab 02 is now the voxel-wall physics demo (`/labs/voxel-wall/`). views-in-2d is deferred, not dropped — it graduates to a future batch. The cross-lab decisions above (pose-zero motion policy, spec precision) carry over and are extended by ticket 09.
