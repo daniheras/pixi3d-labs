@@ -16,15 +16,17 @@ interface Props {
 	description: string;
 	/** view-transition-name shared with the index row for the morph; defaults to `lab-<n>`. */
 	label?: string;
-	/** Source link target; defaults to the repo. */
+	/** Source link target; defaults to the repo root. */
 	sourceUrl?: string;
 	/** Reserve the player bar slot and the phase readout. */
 	player?: boolean;
 }
 
-const { num, name, suffix, description, label, sourceUrl = 'https://github.com/daniheras', player = false } = Astro.props;
+/** The repo, on the branch the deploys come from. */
+const REPO_URL = 'https://github.com/daniheras/pixi3d-labs';
+
+const { num, name, suffix, description, label, sourceUrl = REPO_URL, player = false } = Astro.props;
 const vtName = label ?? `lab-${Number(num)}`;
-const ghLabel = sourceUrl === 'https://github.com/daniheras' ? 'source ↗' : 'source ↗';
 ---
 
 
@@ -49,7 +51,7 @@ const ghLabel = sourceUrl === 'https://github.com/daniheras' ? 'source ↗' : 's
 			<span class="cursor" aria-hidden="true"></span>
 			<nav class="nav">
 				<a href="/">← index</a>
-				<a href={sourceUrl} rel="noopener noreferrer">{ghLabel}</a>
+				<a href={sourceUrl} rel="noopener noreferrer">source ↗</a>
 			</nav>
 		</header>
 
