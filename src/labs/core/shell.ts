@@ -3,9 +3,8 @@
 // astro:page-load / astro:before-swap re-entry lifecycle (the once-per-session semantics
 // behind ticket 08's bug), awaiting async setup, failure routing, backend truth and
 // ?static capture. Labs describe themselves as scene objects and build their own View3D(s)
-// via `createView3D`; camera and reduced-motion policy are lab-side.
+// via core/world's `createView3D`; camera and reduced-motion policy are lab-side.
 import { Application, RendererType, type Ticker } from 'pixi.js';
-import { View3D, type View3DOptions } from '@pixi/3d';
 
 export type LabBackend = 'webgpu' | 'webgl';
 
@@ -45,7 +44,6 @@ interface MountState {
 	/** Set while init is in flight, so a duplicate page-load can't double-init. */
 	initializing: false | Promise<void>;
 }
-
 const state: MountState = { app: null, scenes: new Map(), initializing: false };
 let listenersBound = false;
 
@@ -94,7 +92,8 @@ async function init(host: HTMLElement | null, scene: LabScene): Promise<void> {
 
 	const app = new Application();
 	state.app = app;
-	const run = (async () => {
+	let run: Promise<void> | undefined;
+	run = (async () => {
 		try {
 			await app.init({
 				preference: 'webgpu',
@@ -136,7 +135,7 @@ async function init(host: HTMLElement | null, scene: LabScene): Promise<void> {
 			}
 		} finally {
 			// only clear if no newer init has already replaced the flag
-			if (state.initializing === run) state.initializing = false;
+			if (run && state.initializing === run) state.initializing = false;
 		}
 	})();
 	state.initializing = run;
@@ -170,25 +169,12 @@ function renderFailure(host: HTMLElement, err: unknown): void {
 }
 
 function teardown(): void {
-	const { app, scene } = state;
+	const { app } = state;
 	if (!app) return;
 	state.app = null;
+	// the departing page is still `location` at astro:before-swap, so the path keys the scene
+	const scene = state.scenes.get(location.pathname);
 	if (scene?.update) app.ticker.remove(scene.update);
 	scene?.dispose?.();
 	app.destroy(true, { children: true, texture: true, textureSource: true });
-}
-
-const WORLD_DEFAULTS: Partial<View3DOptions> = {
-	autoResize: true,
-	environment: { skyColor: 0x2a1f1a, groundColor: 0x0b0908 },
-};
-
-/**
- * Create a View3D with the world defaults (ink environment, autoResize) and add it to the
- * app's stage. Labs override per-view sizing or environment via `overrides` — one call or N.
- */
-export function createView3D(app: Application, overrides: Partial<View3DOptions> = {}): View3D {
-	const view = new View3D({ ...WORLD_DEFAULTS, ...overrides });
-	app.stage.addChild(view);
-	return view;
 }

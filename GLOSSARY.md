@@ -45,11 +45,11 @@ The scene's initial arrangement — every lab object at its starting transform. 
 _Avoid_: rest pose, frame zero, initial state
 
 **Player**:
-The reusable playback controller (`src/labs/player.ts`) plus its UI helper: play/pause/seek/loop over a Timeline, with progress, phases and events. It owns no clock — the lab advances it from the shell's ticker — and knows nothing of physics or rendering.
+The reusable playback controller (`src/labs/core/playback/player.ts`) plus its UI helper: play/pause/seek/loop over a Timeline, with progress, phases and events. It owns no clock — the lab advances it from the shell's ticker — and knows nothing of physics or rendering.
 _Avoid_: reproductor, animation manager, controls
 
 **Timeline**:
-A fixed-body-count pose track sampled by time (the `TimelineSource` seam, `src/labs/timeline.ts`). Today a physics recording; equally hand-authored keyframes. Anything that can answer "where is every body at t" can drive the Player.
+A fixed-body-count pose track sampled by time (the `TimelineSource` seam, `src/labs/core/playback/timeline.ts`). Today a physics recording; equally hand-authored keyframes. Anything that can answer "where is every body at t" can drive the Player.
 _Avoid_: animation clip, recording format, track
 
 **Bake**:

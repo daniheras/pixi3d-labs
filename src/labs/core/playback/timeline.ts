@@ -36,7 +36,7 @@ export interface RecordingWriter {
 	/** Write one body's pose `[x, y, z, qx, qy, qz, qw]` at `tick`. */
 	write(tick: number, body: number, pose: readonly number[]): void;
 	/** Finish the recording: freeze the last tick until `holdMs` elapses. */
-	finish(holdMs: number): RecordingTimeline;
+	finish(holdMs: number, phases: readonly TimelinePhase[]): RecordingTimeline;
 }
 
 /**

@@ -1,4 +1,5 @@
-// Reusable geometry helpers for @pixi/3d (home settled by ticket 04 / ADR 0001).
+// Reusable geometry helpers for @pixi/3d, at core/geometry (home settled by ticket 04 /
+// ADR 0001; indexed here as the shared construction set).
 //
 // A rounded box: CubeGeometry has hard edges and no radius option, so build the
 // classic subdivided-cube-rounded-to-a-shell by hand: clamp each grid vertex to

@@ -3,8 +3,9 @@
 Lab 02 (ticket 09) needed loop, pause, scrub and a progress bar over a physics
 choreography, and the player had to be reusable across labs. We decided on **baked
 playback**: at init the full choreography is simulated headless in Rapier at a fixed
-60 Hz and recorded as per-tick poses (`src/labs/timeline.ts`); a pure controller
-(`src/labs/player.ts`) samples that Timeline and drives the UI. The controller has no
+60 Hz and recorded as per-tick poses (`src/labs/core/playback/timeline.ts` since ADR
+0004); a pure controller (`src/labs/core/playback/player.ts`) samples that Timeline and
+drives the UI. The controller has no
 clock of its own — the lab advances it from the shell's ticker — and knows nothing of
 physics or rendering behind the `TimelineSource` seam.
 

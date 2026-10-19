@@ -15,8 +15,8 @@ const description =
 
 <script>
 	// the shell owns the lifecycle; the page only mounts the scene (ticket 04)
-	import { mountLab } from '../../labs/shell';
-	import { createHelloCubeScene } from '../../labs/hello-cube';
+	import { mountLab } from '../../labs/core/shell';
+	import { createHelloCubeScene } from '../../labs/hello-cube/scene';
 
 	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, createHelloCubeScene());
 </script>

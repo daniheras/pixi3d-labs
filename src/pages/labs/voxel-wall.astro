@@ -16,9 +16,9 @@ const description =
 
 <script>
 	// the shell owns the renderer lifecycle; the page mounts the scene and the player bar
-	import { mountLab } from '../../labs/shell';
-	import { createVoxelWallScene } from '../../labs/voxel-wall';
-	import { mountPlayerUI } from '../../labs/player';
+	import { mountLab } from '../../labs/core/shell';
+	import { createVoxelWallScene } from '../../labs/voxel-wall/scene';
+	import { mountPlayerUI } from '../../labs/core/playback/player';
 
 	const scene = createVoxelWallScene();
 	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, scene);
