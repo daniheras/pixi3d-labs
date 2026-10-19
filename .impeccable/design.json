@@ -65,9 +65,9 @@
       "name": "Ghost Watermark",
       "kind": "custom",
       "refersTo": "ghost",
-      "description": "Outline-only giant numeral/word in the background; ornament, aria-hidden, never informative.",
+      "description": "Outline-only giant numeral/word: Signal Red stroke over the ground, ink where a red band crosses it (mix-blend difference) — a print-style negative. Ornament; aria-hidden, never informative.",
       "html": "<span class=\"ds-ghost\" aria-hidden=\"true\">3D</span>",
-      "css": ".ds-ghost { position: fixed; right: -0.05em; top: 90px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: clamp(180px, 30vw, 400px); font-weight: 800; line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1px rgba(229,72,60,0.14); pointer-events: none; user-select: none; }"
+      "css": ".ds-ghost { position: fixed; right: -0.05em; top: 90px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: clamp(180px, 30vw, 400px); font-weight: 800; line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1px #e5483c; mix-blend-mode: difference; pointer-events: none; user-select: none; z-index: 2; }"
     },
     {
       "name": "Link (discreet)",

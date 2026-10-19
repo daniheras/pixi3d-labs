@@ -166,7 +166,9 @@ The page's one component: a full-bleed flex row — numeral chip, poster name, s
 - **Color:** red on ground, ink on red bands; disabled under prefers-reduced-motion
 
 ### Ghost Watermark
-- **Type:** Ghost role (outline-only red at 14% alpha); fixed upper-right, bleeding the edge; aria-hidden, pointer-events none, repositioned below the index on mobile
+- **Type:** Ghost role; solid Signal Red 1px stroke (fill transparent), `mix-blend-mode: difference`, fixed upper-right bleeding the edge, above the bands (z-index 2); aria-hidden, pointer-events none
+- **The Negative:** over the ink ground the stroke reads Signal Red; where an inverse band crosses it, difference turns the stroke to ink on red — a print-style knockout that follows the band. Re-rooted below the index on mobile
+- **Never** carries information; repositioned below the index on mobile
 
 ## Do's and Don'ts
 

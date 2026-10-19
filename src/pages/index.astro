@@ -145,10 +145,11 @@ const githubUrl = 'https://github.com/daniheras';
 			line-height: 1;
 			letter-spacing: -0.05em;
 			color: transparent;
-			-webkit-text-stroke: 1px rgba(229, 72, 60, 0.14);
+			-webkit-text-stroke: 1px var(--red);
+			mix-blend-mode: difference; /* red on ink, ink on red — a negative where the bands cross it */
 			pointer-events: none;
 			user-select: none;
-			z-index: 0;
+			z-index: 2;
 		}
 
 		/* top bar */
