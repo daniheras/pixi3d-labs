@@ -1,0 +1,169 @@
+---
+name: pixijs-3d-labs
+description: Hands-on labs for the PixiJS 3D closed beta — a typographic billboard in red phosphor.
+colors:
+  ink: "#0b0908"
+  signal-red: "#e5483c"
+  signal-red-bright: "#ff5f4d"
+  cream: "#d8cfc7"
+  warm-gray: "#8a7e76"
+  hairline: "#2a1f1a"
+typography:
+  display:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "clamp(44px, 7.5vw, 92px)"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.035em"
+  body:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "15px"
+    fontWeight: 400
+    lineHeight: 1.75
+    letterSpacing: "normal"
+  label:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.6
+    letterSpacing: "normal"
+  ghost:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "clamp(180px, 30vw, 400px)"
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "-0.05em"
+rounded:
+  none: "0"
+spacing:
+  xs: "14px"
+  sm: "22px"
+  md: "26px"
+  lg: "44px"
+  gutter: "48px"
+components:
+  index-row:
+    backgroundColor: "transparent"
+    textColor: "{colors.cream}"
+    rounded: "{rounded.none}"
+    padding: "26px 48px"
+  numeral-chip:
+    backgroundColor: "{colors.signal-red}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.none}"
+    size: "84px"
+  status-line:
+    backgroundColor: "transparent"
+    textColor: "{colors.warm-gray}"
+    rounded: "{rounded.none}"
+    padding: "14px 48px 18px"
+---
+
+# Design System: pixijs-3d-labs
+
+## Overview
+
+**Creative North Star: "The Typographic Billboard"**
+
+The interface is the poster: two lines of poster-scale monospace type carry the whole page, and everything else — a wordmark, one intro line, a pinned status line, a ghost outline numeral — exists to frame them. The mood is warm machine nostalgia: a near-black warm ground (an idle terminal at night, not a void) with Signal Red doing the talking. Nothing here is skeuomorphic chrome; the TUI world arrives as material (mono at scale, phosphor red, blinking block cursors, hairline rules), never as a replica of a terminal window.
+
+Depth does not exist in this system and that is a choice: surfaces answer through full-bleed color inversion, not elevation.
+
+**Key Characteristics:**
+- Poster-scale mono type as the only layout device — no cards, no panels, no boxes
+- Full-bleed inverse-video bands as the interaction grammar
+- One face, one red, one ground; hairlines are the only structure
+- Warm nostalgia expressed through color and the blinking cursor, not through fake textures
+
+## Colors
+
+A three-voice palette: a warm near-black ground, one red with a bright end, and cream/warm-gray text. Grouped by role; the ground is warm on purpose — never pure black.
+
+### Primary
+- **Signal Red** (#e5483c): The state color. Fills numeral chips and entire inverse-video bands when the interface answers (hover, focus, standing demo state); colors links at rest. At rest the page is mostly ground; red speaks on contact.
+
+### Neutral
+- **Ink** (#0b0908): The page ground and the text-on-red. Warm, never #000.
+- **Cream** (#d8cfc7): Display type and body lit text — the "on" phosphor.
+- **Warm Gray** (#8a7e76): Secondary text: intro, suffixes, status line. Never darker than 4.5:1 against Ink.
+- **Signal Red Bright** (#ff5f4d): Red's hover end — link hovers, numeral on an inverted band.
+- **Hairline** (#2a1f1a): 1px rules: the status line's top border is the only structural line on the page.
+
+### Named Rules
+**The Signal Rule.** Red is the voice of state: it fills a whole band when the interface answers you and stays out of the content's way at rest. Cream and Warm Gray carry reading; red carries action.
+**The Warm Black Rule.** The ground is #0b0908 — warm and never pure #000; text on it is never pure #fff.
+
+## Typography
+
+**Display Font:** JetBrains Mono (variable, self-hosted woff2; fallback ui-monospace, DejaVu Sans Mono, Liberation Mono)
+**Body Font:** JetBrains Mono (same face — one voice at every size)
+
+**Character:** A single monospace voice at extreme scale contrast: the same face at 92px reads as a billboard, at 15px as a terminal line. Warm nostalgia comes from the face's soft terminal forms in red-on-ink, not from any display-serif costume.
+
+### Hierarchy
+- **Display** (700, clamp(44px, 7.5vw, 92px), line-height 1, tracking −0.035em): index row names — the page's whole message.
+- **Ghost** (800, clamp(180px, 30vw, 400px), 1px red stroke at 14% alpha, fill transparent): the outline "3D" watermark; ornament that must never carry information.
+- **Body** (400, 15px, 1.75, ≤62ch): the intro paragraph.
+- **Label** (400, 13px, 1.6): status line, github links, suffixes at 16px on rows.
+
+### Named Rules
+**The One Voice Rule.** JetBrains Mono is the only face, self-hosted; no second typeface enters the system.
+
+## Layout
+
+Full-bleed vertical stack: bar → intro → index (the poster moment, vertically centered by auto margins) → status line pinned at the bottom edge. No container: rows run edge-to-edge so inverse bands touch the viewport edges. Side gutters are 48px (22px under 720px). Row height is driven by the 84px numeral square plus 26px row padding; the type scale is fluid via clamp() with the caps hit at 1440px. Single breakpoint: 720px, where gutters shrink, the "↵ open" hint hides, and suffixes wrap under bound middots (never opening a line with a separator).
+
+## Elevation & Depth
+
+Flat by conviction. The system carries no shadows at all; depth is expressed as full-bleed color inversion (a row becomes the red band), 1px outline strokes (the ghost watermark), and the blinking cursor's presence/absence. The only "glow" allowed is a ≤12px rgba-red text-shadow on phosphor-lit type, at whisper opacity — and it is optional flavor, never structure.
+
+### Named Rules
+**The Flat Phosphor Rule.** No box-shadows, no gradients-as-depth. An element is either on the ground, in a red band, or outlined.
+
+## Shapes
+
+Square corners everywhere (radius 0) — the billboard is a rectangle of type. The only graphic devices are: solid red squares (numeral chips), full-bleed bands, 1px hairlines, 1px dashed focus outlines, and the block cursor (0.55em × 1em rectangle). No strokes, no clip-paths, no iconography.
+
+## Components
+
+### Index Row (signature)
+The page's one component: a full-bleed flex row — numeral chip, poster name, suffix metadata.
+- **Shape:** no radius, full-bleed; padding 26px 48px; gap 36px
+- **Rest:** transparent ground; cream name (clamp 44–92px, 700, −0.035em); red chip with ink numeral (84px square); warm-gray suffix (16px, middots bound with NBSP to their left token)
+- **Hover / Focus:** full-bleed Signal Red band; name and suffix flip to ink (suffix at 0.92 alpha over red — ≥4.5:1); chip inverts to ink with bright-red numeral; `:focus-visible` shares the exact inversion plus a 1px dashed outline
+- **Standing state:** the last row may rest in its inverted state ("demo"), with a blinking block cursor after its suffix
+
+### Numeral Chip
+- **Shape:** square, radius 0; 84px (clamps to 56px on small screens)
+- **Color:** Signal Red ground, ink numeral (700, ~32px); inverts on row hover
+
+### Status Line
+- **Shape:** full-width flex, 1px Hairline top border, padding 14px 48px 18px
+- **Type:** Label 13px in Warm Gray; content: `labs: n · status: beta`, `↵ open` (desktop only), github link, blinking block cursor
+
+### Wordmark
+- **Type:** 15–17px, 700, tracking −0.02em; the "3d" in Signal Red
+- **Behavior:** links home
+
+### Block Cursor
+- **Shape:** 0.55em × 1em rectangle, steps(1) blink at 1.1s
+- **Color:** red on ground, ink on red bands; disabled under prefers-reduced-motion
+
+### Ghost Watermark
+- **Type:** Ghost role (outline-only red at 14% alpha); fixed upper-right, bleeding the edge; aria-hidden, pointer-events none, repositioned below the index on mobile
+
+## Do's and Don'ts
+
+### Do:
+- **Do** set index content as poster-scale rows (clamp(44px, 7.5vw, 92px), 700, −0.035em) with red numeral chips.
+- **Do** express every interactive answer as the full-bleed inverse band, hover and focus included.
+- **Do** bind middots in narrow suffix metadata (`token\u00A0·`) so lines never open with a separator.
+- **Do** keep the ground #0b0908 and text ≥4.5:1 against it (suffix ink over red at 0.92 alpha minimum).
+- **Do** self-host the JetBrains Mono variable woff2 (`/fonts/jetbrains-mono-var.woff2`).
+
+### Don't:
+- **Don't** use ASCII/box-drawing art where it carries meaning — it rendered broken in real browsers; graphics are CSS solids or nothing.
+- **Don't** add shadows, gradients-as-depth, or border-radius; the system is flat and square.
+- **Don't** introduce a second typeface or an icon set; type and red squares are the vocabulary.
+- **Don't** soften or remove the standing inversion of the last index row — it is the page's memorable moment.
+- **Don't** let red drift to another hue: Signal Red (#e5483c) and its bright end (#ff5f4d) are the only reds.

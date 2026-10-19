@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T13:30:00Z",
+  "title": "Design System: pixijs-3d-labs",
+  "extensions": {
+    "colorMeta": {
+      "signal-red": { "role": "primary", "displayName": "Signal Red", "canonical": "#e5483c", "tonalRamp": ["#1a0705", "#3a0f0b", "#6b1c14", "#a03a2c", "#e5483c", "#ff5f4d", "#ff8a7a", "#ffc7ba"] },
+      "signal-red-bright": { "role": "primary", "displayName": "Signal Red Bright", "canonical": "#ff5f4d", "tonalRamp": ["#1a0705", "#3a0f0b", "#6b1c14", "#a03a2c", "#e5483c", "#ff5f4d", "#ff8a7a", "#ffc7ba"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#0b0908", "tonalRamp": ["#0b0908", "#120e0c", "#1a1411", "#2a1f1a", "#3a2a22", "#57453b", "#7a6358", "#a89486"] },
+      "cream": { "role": "neutral", "displayName": "Cream Phosphor", "canonical": "#d8cfc7", "tonalRamp": ["#1a1614", "#3a332e", "#5c524a", "#8a7e76", "#b0a49a", "#d8cfc7", "#e9e2da", "#f7f3ee"] },
+      "warm-gray": { "role": "neutral", "displayName": "Warm Gray", "canonical": "#8a7e76", "tonalRamp": ["#0b0908", "#241f1c", "#3f3833", "#5c534c", "#8a7e76", "#a89d94", "#c6bdb4", "#e4ded7"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#2a1f1a", "tonalRamp": ["#0b0908", "#151110", "#2a1f1a", "#3a2a22", "#4a372c", "#5c4536", "#705643", "#86694f"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Billboard", "purpose": "Index row names only — the page's whole message at poster scale." },
+      "ghost": { "displayName": "Ghost Watermark", "purpose": "Outline-only ornament (1px red stroke, 14% alpha); never carries information." },
+      "body": { "displayName": "Terminal Line", "purpose": "Intro prose; one voice, smaller size." },
+      "label": { "displayName": "Status", "purpose": "Status line, links, metadata." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "blink-block", "value": "steps(1) 1.1s infinite", "purpose": "Block cursor blink; the only looping motion. Disabled under prefers-reduced-motion." },
+      { "name": "state-flip", "value": "0.15s ease", "purpose": "Background/color inversion on hover and focus." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "720px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Index Row",
+      "kind": "custom",
+      "refersTo": "index-row",
+      "description": "The signature component: full-bleed poster row — numeral chip, giant name, suffix metadata. Inverts to a red band on hover/focus.",
+      "html": "<a class=\"ds-index-row\" href=\"#\"><span class=\"ds-num\">01</span><span class=\"ds-name\">hello-cube</span><span class=\"ds-suffix\">3d · view3d · beta</span></a>",
+      "css": ".ds-index-row { display: flex; align-items: center; gap: 36px; padding: 26px 48px; background: transparent; text-decoration: none; transition: background 0.15s ease; font-family: 'JetBrains Mono', ui-monospace, monospace; } .ds-index-row:hover, .ds-index-row:focus-visible { background: #e5483c; outline: none; } .ds-num { flex-shrink: 0; width: 84px; height: 84px; display: grid; place-items: center; background: #e5483c; color: #0b0908; font-size: 32px; font-weight: 700; transition: background 0.15s ease, color 0.15s ease; } .ds-index-row:hover .ds-num, .ds-index-row:focus-visible .ds-num { background: #0b0908; color: #ff5f4d; } .ds-name { font-size: clamp(44px, 7.5vw, 92px); font-weight: 700; letter-spacing: -0.035em; line-height: 1; color: #d8cfc7; transition: color 0.15s ease; } .ds-index-row:hover .ds-name, .ds-index-row:focus-visible .ds-name { color: #0b0908; } .ds-suffix { font-size: 16px; color: #8a7e76; margin-left: 8px; transition: color 0.15s ease; } .ds-index-row:hover .ds-suffix, .ds-index-row:focus-visible .ds-suffix { color: rgba(11,9,8,0.92); }"
+    },
+    {
+      "name": "Numeral Chip",
+      "kind": "chip",
+      "refersTo": "numeral-chip",
+      "description": "Solid red square carrying the lab number; inverts on the row's active state.",
+      "html": "<span class=\"ds-chip\">02</span>",
+      "css": ".ds-chip { display: inline-grid; place-items: center; width: 84px; height: 84px; background: #e5483c; color: #0b0908; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 32px; font-weight: 700; }"
+    },
+    {
+      "name": "Status Line",
+      "kind": "nav",
+      "refersTo": "status-line",
+      "description": "Pinned bottom edge: lab count, beta status, open hint, github, blinking cursor.",
+      "html": "<footer class=\"ds-status\"><span>labs: 2 · status: beta</span><span>↵ open</span><span class=\"ds-sp\"></span><a class=\"ds-gh\" href=\"#\">github ↗</a><span class=\"ds-cursor\"></span></footer>",
+      "css": ".ds-status { display: flex; gap: 3ch; align-items: center; border-top: 1px solid #2a1f1a; padding: 14px 48px 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #8a7e76; } .ds-sp { flex: 1; } .ds-gh { color: inherit; text-decoration: none; transition: color 0.15s ease; } .ds-gh:hover { color: #ff5f4d; } .ds-cursor { display: inline-block; width: 1ch; height: 1em; background: #e5483c; animation: ds-blink 1.1s steps(1) infinite; } @keyframes ds-blink { 50% { opacity: 0; } }"
+    },
+    {
+      "name": "Wordmark",
+      "kind": "nav",
+      "refersTo": "wordmark",
+      "description": "Mono wordmark with the '3d' syllable in Signal Red; links home.",
+      "html": "<a class=\"ds-wordmark\" href=\"#\">pixijs-<span class=\"ds-d3\">3d</span>-labs</a>",
+      "css": ".ds-wordmark { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; color: #d8cfc7; text-decoration: none; } .ds-d3 { color: #e5483c; }"
+    },
+    {
+      "name": "Ghost Watermark",
+      "kind": "custom",
+      "refersTo": "ghost",
+      "description": "Outline-only giant numeral/word in the background; ornament, aria-hidden, never informative.",
+      "html": "<span class=\"ds-ghost\" aria-hidden=\"true\">3D</span>",
+      "css": ".ds-ghost { position: fixed; right: -0.05em; top: 90px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: clamp(180px, 30vw, 400px); font-weight: 800; line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1px rgba(229,72,60,0.14); pointer-events: none; user-select: none; }"
+    },
+    {
+      "name": "Link (discreet)",
+      "kind": "nav",
+      "refersTo": "label",
+      "description": "Dim warm-gray text link with a red hover end — used for github and inline hints.",
+      "html": "<a class=\"ds-link\" href=\"#\">github ↗</a>",
+      "css": ".ds-link { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #8a7e76; text-decoration: none; transition: color 0.15s ease; } .ds-link:hover { color: #ff5f4d; } .ds-link:focus-visible { outline: 1px dashed #e5483c; outline-offset: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Typographic Billboard",
+    "overview": "The interface is the poster: two lines of poster-scale monospace type carry the whole page, and everything else — a wordmark, one intro line, a pinned status line, a ghost outline numeral — exists to frame them. The mood is warm machine nostalgia: a near-black warm ground with Signal Red doing the talking. Nothing here is skeuomorphic chrome; the TUI world arrives as material (mono at scale, phosphor red, blinking block cursors, hairline rules), never as a replica of a terminal window. Depth does not exist in this system and that is a choice: surfaces answer through full-bleed color inversion, not elevation.",
+    "keyCharacteristics": [
+      "Poster-scale mono type as the only layout device — no cards, no panels, no boxes",
+      "Full-bleed inverse-video bands as the interaction grammar",
+      "One face, one red, one ground; hairlines are the only structure",
+      "Warm nostalgia expressed through color and the blinking cursor, not through fake textures"
+    ],
+    "rules": [
+      { "name": "The Signal Rule", "body": "Red is the voice of state: it fills a whole band when the interface answers you and stays out of the content's way at rest. Cream and Warm Gray carry reading; red carries action.", "section": "colors" },
+      { "name": "The Warm Black Rule", "body": "The ground is #0b0908 — warm and never pure #000; text on it is never pure #fff.", "section": "colors" },
+      { "name": "The One Voice Rule", "body": "JetBrains Mono is the only face, self-hosted; no second typeface enters the system.", "section": "typography" },
+      { "name": "The Flat Phosphor Rule", "body": "No box-shadows, no gradients-as-depth. An element is either on the ground, in a red band, or outlined.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do set index content as poster-scale rows (clamp(44px, 7.5vw, 92px), 700, −0.035em) with red numeral chips.",
+      "Do express every interactive answer as the full-bleed inverse band, hover and focus included.",
+      "Do bind middots in narrow suffix metadata (token\\u00A0·) so lines never open with a separator.",
+      "Do keep the ground #0b0908 and text ≥4.5:1 against it (suffix ink over red at 0.92 alpha minimum).",
+      "Do self-host the JetBrains Mono variable woff2 (/fonts/jetbrains-mono-var.woff2)."
+    ],
+    "donts": [
+      "Don't use ASCII/box-drawing art where it carries meaning — it rendered broken in real browsers; graphics are CSS solids or nothing.",
+      "Don't add shadows, gradients-as-depth, or border-radius; the system is flat and square.",
+      "Don't introduce a second typeface or an icon set; type and red squares are the vocabulary.",
+      "Don't soften or remove the standing inversion of the last index row — it is the page's memorable moment.",
+      "Don't let red drift to another hue: Signal Red (#e5483c) and its bright end (#ff5f4d) are the only reds."
+    ]
+  }
+}
