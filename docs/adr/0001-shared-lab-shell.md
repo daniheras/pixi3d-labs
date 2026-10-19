@@ -10,6 +10,7 @@ Every lab repeats the same renderer lifecycle (pixi Application init, canvas mou
 ## Consequences
 
 - The shell stays minimal: no orbit controls in v1 — adopted only when a lab spec (ticket 05) calls for them.
+- Application-level resize is shell-owned (`resizeTo: host`); per-view sizing is the lab's, via the `createView3D` overrides.
 - `?static` one-frame mode lives in the shell, so commit-once Playwright captures (ticket 02) are reproducible with zero capture-specific code in labs; the context's `static` flag lets labs avoid randomness when being photographed.
 - The status line reports the actually resolved backend through a `[data-lab-backend]` convention, keeping the "webgpu-first · webgl fallback" claim honest.
-- The world's two hexes (red `#e5483c`, ink `#0b0908`) are duplicated between `createView3D` defaults and the layout's CSS vars — accepted until it hurts.
+- The world's hexes are duplicated between the layout's CSS vars and shell defaults — accepted until it hurts. The scene environment defaults to the ink pair (`skyColor: 0x2a1f1a`, `groundColor: 0x0b0908`, as live in hello-cube); red stays in the chrome, out of the scene, per DESIGN.md's signal rule.
