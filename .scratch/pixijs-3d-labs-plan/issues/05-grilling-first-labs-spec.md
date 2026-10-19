@@ -25,10 +25,10 @@ Decided in a grilling session (2026-10-19; 13 questions in two rounds, all recom
 ### Lab 02 — `views-in-2d` (route `/labs/views-in-2d/`)
 
 - **What it shows**: the product's positioning claim — several 3D views composing inside one 2D stage, the integration generic 3D engines cannot show (homage to the beta's `views-in-2d` example).
-- **3D content**: three inset `View3D`s in a centered, even row, one material model each: (1) `01 · METAL` — metallic PBR torus knot; (2) `02 · GLASS` — transmissive glass capsule; (3) `03 · TOON` — toon sphere in Signal Red (the only red object in the scene — the cube's grammar echoed). Metal and glass stay material-honest.
+- **3D content**: three inset `View3D`s in a centered, even row, one material model each: (1) `01 · METAL` — metallic PBR torus knot; (2) `02 · GLASS` — transmissive glass capsule; (3) `03 · TOON` — toon sphere in Signal Red (the only red object in the scene). Metal and glass stay material-honest.
 - **2D overlay**: plain mono captions beneath each plate (`01 · METAL`, `02 · GLASS`, `03 · TOON`, English), warm gray with the numeral in red; no boxes, no cards, no panels. No other 2D decoration.
 - **Interaction**: per-view orbit — each specimen idles in a slow self-rotation; dragging on a plate orbits that view's camera (`OrbitCamera`); dragging elsewhere does nothing.
-- **Post-processing**: none in v1 (effects may headline a later lab).
+- **Post-processing**: none in v1.
 - **Implementation note (not spec)**: the glass refracts its view's own ink environment; making the transmission pop against it is a tuning concern, not a spec constraint.
 
 ### Cross-lab decisions

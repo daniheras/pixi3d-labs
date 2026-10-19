@@ -30,7 +30,7 @@ A documented plan (no implementation code) for `pixijs-3d-labs`: an Astro landin
 
 - Deployment target (Vercel / Netlify / GitHub Pages) — decide once the plan's build story is clear.
 - Bundle / perf strategy for the beta (lazy backend chunks, per-lab code-splitting) — pin once the plan's build story is clear.
-- Additional labs beyond the first two — the first two specs now exist (ticket 05); labs 3+ (refraction piece, 3D+2D HUD are standing candidates) open as a future effort once the plan is locked.
+- Additional labs beyond the first two — the first two specs now exist (ticket 05); the next batch graduates as its own future effort.
 
 ## Out of scope
 

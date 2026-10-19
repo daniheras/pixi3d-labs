@@ -39,3 +39,7 @@ _Avoid_: footer, debug bar
 **Static mode**:
 The `?static` capture mode: the scene advances exactly one fixed-delta frame and stops, so screenshots are reproducible.
 _Avoid_: freeze mode, screenshot mode, paused mode
+
+**Pose zero**:
+The scene's initial arrangement — every lab object at its starting transform. Both labs freeze here under reduced motion, and the `?static` capture photographs exactly this frame.
+_Avoid_: rest pose, frame zero, initial state
