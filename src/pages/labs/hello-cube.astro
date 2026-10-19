@@ -1,0 +1,22 @@
+---
+// Lab 01 — hello-cube (direction contract in .impeccable/surfaces/src-pages-labs-hello-cube-astro.md)
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const description =
+	'Lab 01 — hello-cube: a first hands-on look at the closed @pixi/3d beta. Rendered webgpu-first, fallback webgl.';
+---
+
+<LabLayout
+	num="01"
+	name="hello-cube"
+	suffix="3d&#8202;·&#8202;view3d&#8202;·&#8202;beta"
+	description={description}
+/>
+
+<script>
+	// the shell owns the lifecycle; the page only mounts the scene (ticket 04)
+	import { mountLab } from '../../labs/shell';
+	import { createHelloCubeScene } from '../../labs/hello-cube';
+
+	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, createHelloCubeScene());
+</script>
