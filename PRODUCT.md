@@ -25,13 +25,14 @@ An early, hands-on look at the PixiJS 3D closed beta through focused, minimal, w
 - One static preview image per lab, committed as an asset and regenerated only when a lab changes.
 - Labs are read and shared as individual links; the landing is the entry point.
 - All site copy in English.
+- Deployed on Cloudflare Workers (static assets) at `labs.daniheras.dev`; deploys are local builds via Wrangler (`npm run deploy`) — no git CI, since the closed-beta tarball never enters the repo (ADR 0003).
 
 ## Capabilities and Constraints
 
 - Stack: Astro + vanilla TypeScript, no UI framework; a shared lab shell handles renderer init, camera, resize, cleanup (API being settled separately).
 - First two labs already decided: "hello cube" and a 2D+3D hybrid.
 - Beta status must be visible and honest; nothing may imply a stable public API.
-- Explicitly undecided: deployment target (Vercel/Netlify/GitHub Pages), styling/CSS approach, bundle/perf strategy, labs beyond the first two.
+- Explicitly undecided: styling/CSS approach, bundle/perf strategy, labs beyond the first two.
 
 ## Brand Commitments
 

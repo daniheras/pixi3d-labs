@@ -27,9 +27,10 @@ A documented plan (no implementation code) for `pixijs-3d-labs`: an Astro landin
 - [First two labs: spec](issues/05-grilling-first-labs-spec.md): hello-cube (lab 01) is the minimal proof — the prototype scene adopted as spec, red cube as the in-scene subject, hands-off; views-in-2d (lab 02) is the positioning claim — three inset plates in a centered row (metal torus knot, transmissive glass capsule, red toon sphere) with plain mono captions and per-view orbit, no post-processing; both labs freeze at pose zero under reduced motion and for `?static` capture; spec pins shape, implementation owns the decimals. _Lab 02 since superseded by ticket 09; views-in-2d deferred to a future batch._
 - [Lab 02 spec: voxel-wall physics demolition](issues/09-grilling-voxel-wall-spec.md): `voxel-wall` (route `/labs/voxel-wall/`) — Rapier compat baked at init into a per-tick pose recording played back by a reusable `src/labs/player.ts` (controller + `mountPlayerUI`, `TimelineSource` seam, drag-scrub, space toggle, phase readout); kinematic sphere hands off to dynamic at impact; fixed 3/4 camera; cream voxels + red sphere; 5s settled hold inside the loop, cut to pose zero; reduced-motion/`?static` freeze at pose zero with the player visible and paused; ticket 04 shell (LabLayout + shell.ts) extracted as part of this lab with hello-cube migrating onto it. **Implemented 2026-10-19** (see the ticket's implementation comment; ADR 0002).
 
+- [Deployment: Cloudflare Workers at `labs.daniheras.dev`](../../docs/adr/0003-cloudflare-workers-deploy.md): static-asset Worker deployed with Wrangler from local builds (`npm run deploy`); no git CI — the closed-beta tarball never enters the repo.
+
 ## Not yet specified
 
-- Deployment target (Vercel / Netlify / GitHub Pages) — decide once the plan's build story is clear.
 - Bundle / perf strategy for the beta (lazy backend chunks, per-lab code-splitting) — pin once the plan's build story is clear.
 - Additional labs beyond the first two — hello-cube (ticket 05) and voxel-wall (ticket 09) are specified; the next batch graduates as its own future effort and hosts the deferred views-in-2d.
 

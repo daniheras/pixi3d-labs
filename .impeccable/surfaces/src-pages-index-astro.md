@@ -32,5 +32,5 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 ## Unresolved
 
-- Deployment target (Vercel / Netlify / GitHub Pages) — does not bind this surface's design.
+- Deployment target — resolved after this review: Cloudflare Workers at `labs.daniheras.dev` (ADR 0003); does not bind this surface's design.
 - Real lab pages don't exist yet (tickets 04/05); landing links point at future routes.
