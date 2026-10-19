@@ -53,6 +53,10 @@ export const AK47 = {
 	camera: {
 		position: [4, 3.2, 8],
 		target: [0, 0.9, 0],
+		/** The gun's bounding sphere around the target, for the responsive fit. */
+		fitRadius: 5.5,
+		/** Headroom over the sphere fit, so the muzzle and stock never kiss the edge. */
+		fitMargin: 1.15,
 	},
 	/** Turntable drag: horizontal pointer travel yaws the gun at this rate (rad/px). */
 	drag: {

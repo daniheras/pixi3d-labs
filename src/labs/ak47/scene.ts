@@ -45,6 +45,8 @@ export function createAk47Scene(): LabScene {
 	let overlay: HTMLDivElement | null = null;
 	/** One record per callout: the 3D anchor on the gun and its 2D leader + dot. */
 	let callouts: { node: Container3D; line: SVGLineElement; dot: SVGCircleElement; fx: number; fy: number }[] = [];
+	/** Refits the camera on stage resize; disconnected at dispose. */
+	let resizeObserver: ResizeObserver | null = null;
 	let timeMs = 0;
 	/** Frozen clock when ?t=<ms> is set; the update hook stops advancing. */
 	let frozenTimeMs: number | null = null;
@@ -186,12 +188,36 @@ export function createAk47Scene(): LabScene {
 				syncReveals();
 			});
 
-			view.camera.position.set(...AK47.camera.position);
-			view.camera.lookAt({
-				x: AK47.camera.target[0],
-				y: AK47.camera.target[1],
-				z: AK47.camera.target[2],
-			});
+			// responsive framing: the config's camera position and target set the desktop
+			// look; a portrait viewport narrows the horizontal fov until the gun clips — so
+			// the distance pushes out just enough to fit the gun's bounding sphere on both
+			// axes, and never pushes in past the desktop distance
+			const [hdx, hdy, hdz] = AK47.camera.position.map((v, i) => v - AK47.camera.target[i]);
+			const dHome = Math.hypot(hdx, hdy, hdz);
+			const DIR = [hdx / dHome, hdy / dHome, hdz / dHome];
+			const frame = (): void => {
+				if (!view || !ctx) return;
+				const w = ctx.host.clientWidth;
+				const h = ctx.host.clientHeight;
+				if (!w || !h) return;
+				const tanV = Math.tan(((view.camera.fov ?? 60) / 2) * (Math.PI / 180));
+				const tanH = tanV * (w / h);
+				const fit = AK47.camera.fitRadius * AK47.camera.fitMargin;
+				const d = Math.max(dHome, fit / (tanH / Math.hypot(1, tanH)), fit / (tanV / Math.hypot(1, tanV)));
+				view.camera.position.set(
+					AK47.camera.target[0] + DIR[0] * d,
+					AK47.camera.target[1] + DIR[1] * d,
+					AK47.camera.target[2] + DIR[2] * d,
+				);
+				view.camera.lookAt({
+					x: AK47.camera.target[0],
+					y: AK47.camera.target[1],
+					z: AK47.camera.target[2],
+				});
+			};
+			frame();
+			resizeObserver = new ResizeObserver(frame);
+			resizeObserver.observe(context.host);
 
 			// the callout overlay: static label boxes at stage slots, an SVG layer under
 			// them for the leaders. Each anchor is a child of the model at its part, so
@@ -323,6 +349,8 @@ export function createAk47Scene(): LabScene {
 		dispose() {
 			bulb = null; // the scene graph goes with app.destroy, shell-side
 			view = null;
+			resizeObserver?.disconnect();
+			resizeObserver = null;
 			overlay?.remove();
 			overlay = null;
 			callouts = [];
