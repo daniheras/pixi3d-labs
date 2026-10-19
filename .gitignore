@@ -1,5 +1,7 @@
 # build output
 dist/
+# beta release tarball (never commit the binary)
+*.tgz
 # generated types
 .astro/
 
