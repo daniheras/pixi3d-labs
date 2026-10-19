@@ -19,8 +19,10 @@
     },
     "shadows": [],
     "motion": [
+      { "name": "entrance", "value": "360ms cubic-bezier(0.23, 1, 0.32, 1), 60ms stagger, opacity 0→1 + translateY(8px)→0", "purpose": "The one authored moment: load reads top to bottom (intro, rows, status). Ghost fades only. Reduced motion: opacity-only 200ms, no stagger." },
+      { "name": "press", "value": "140ms cubic-bezier(0.23, 1, 0.32, 1), chip scale(0.94) + name opacity 0.85", "purpose": "Press feedback on index rows; the band itself never moves." },
       { "name": "blink-block", "value": "steps(1) 1.1s infinite", "purpose": "Block cursor blink; the only looping motion. Disabled under prefers-reduced-motion." },
-      { "name": "state-flip", "value": "0.15s ease", "purpose": "Background/color inversion on hover and focus." }
+      { "name": "state-flip", "value": "0.15s ease", "purpose": "Background/color inversion on hover and focus (color changes read best on ease, not ease-out). Hover gated to (hover: hover) and (pointer: fine)." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "720px" }
@@ -96,7 +98,8 @@
       "Do express every interactive answer as the full-bleed inverse band, hover and focus included.",
       "Do bind middots in narrow suffix metadata (token\\u00A0·) so lines never open with a separator.",
       "Do keep the ground #0b0908 and text ≥4.5:1 against it (suffix ink over red at 0.92 alpha minimum).",
-      "Do self-host the JetBrains Mono variable woff2 (/fonts/jetbrains-mono-var.woff2)."
+      "Do self-host the JetBrains Mono variable woff2 (/fonts/jetbrains-mono-var.woff2).",
+      "Do gate :hover motion behind (hover: hover) and (pointer: fine); :active press feedback is ungated (a press is real on touch)."
     ],
     "donts": [
       "Don't use ASCII/box-drawing art where it carries meaning — it rendered broken in real browsers; graphics are CSS solids or nothing.",

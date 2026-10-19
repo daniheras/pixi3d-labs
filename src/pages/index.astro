@@ -48,7 +48,7 @@ const githubUrl = 'https://github.com/daniheras';
 			<h1 class="sr-only">pixijs-3d-labs — hands-on labs for the PixiJS 3D beta</h1>
 			{
 				labs.map((lab, i) => (
-					<a class:list={['row', { demo: i === labs.length - 1 }]} href={lab.href}>
+					<a class:list={['row', { demo: i === labs.length - 1 }]} style={`animation-delay: ${60 + i * 60}ms`} href={lab.href}>
 						<span class="num" aria-hidden="true">{lab.num}</span>
 						<h2 class="name">{lab.name}</h2>
 						<span class="suffix">{lab.suffix}&nbsp;</span>
@@ -84,6 +84,7 @@ const githubUrl = 'https://github.com/daniheras';
 			--fg: #d8cfc7;
 			--fg-dim: #8a7e76;
 			--border: #2a1f1a;
+			--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 			color-scheme: dark;
 		}
 
@@ -217,7 +218,11 @@ const githubUrl = 'https://github.com/daniheras';
 			font-weight: 700;
 			transition:
 				background 0.15s ease,
-				color 0.15s ease;
+				color 0.15s ease,
+				transform 140ms var(--ease-out);
+		}
+		.row:active .num {
+			transform: scale(0.94);
 		}
 		.row .name {
 			font-size: clamp(44px, 7.5vw, 92px);
@@ -225,7 +230,12 @@ const githubUrl = 'https://github.com/daniheras';
 			letter-spacing: -0.035em;
 			line-height: 1;
 			color: var(--fg);
-			transition: color 0.15s ease;
+			transition:
+				color 0.15s ease,
+				opacity 140ms var(--ease-out);
+		}
+		.row:active .name {
+			opacity: 0.85;
 		}
 		.row .suffix {
 			font-size: 16px;
@@ -234,27 +244,38 @@ const githubUrl = 'https://github.com/daniheras';
 			transition: color 0.15s ease;
 		}
 
-		/* inverted state: standing on the last row, on hover/focus for all */
-		.row:hover,
+		/* inverted state: standing on the last row, on hover (fine pointers only) and focus */
 		.row:focus-visible,
 		.row.demo {
 			background: var(--red);
 		}
-		.row:hover .num,
 		.row:focus-visible .num,
 		.row.demo .num {
 			background: #0b0908;
 			color: var(--red-bright);
 		}
-		.row:hover .name,
 		.row:focus-visible .name,
 		.row.demo .name {
 			color: #0b0908;
 		}
-		.row:hover .suffix,
 		.row:focus-visible .suffix,
 		.row.demo .suffix {
 			color: rgba(11, 9, 8, 0.92);
+		}
+		@media (hover: hover) and (pointer: fine) {
+			.row:hover {
+				background: var(--red);
+			}
+			.row:hover .num {
+				background: #0b0908;
+				color: var(--red-bright);
+			}
+			.row:hover .name {
+				color: #0b0908;
+			}
+			.row:hover .suffix {
+				color: rgba(11, 9, 8, 0.92);
+			}
 		}
 
 		/* cursor */
@@ -273,7 +294,46 @@ const githubUrl = 'https://github.com/daniheras';
 				opacity: 0;
 			}
 		}
+
+		/* the one authored moment: staggered entrance, poster reads top to bottom */
+		.intro,
+		.row,
+		.status {
+			opacity: 0;
+			transform: translateY(8px);
+			animation: enter 360ms var(--ease-out) forwards;
+		}
+		.status {
+			animation-delay: 180ms;
+		}
+		.ghost {
+			opacity: 0;
+			animation: enter-fade 500ms var(--ease-out) 180ms forwards;
+		}
+		@keyframes enter {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		@keyframes enter-fade {
+			to {
+				opacity: 1;
+			}
+		}
 		@media (prefers-reduced-motion: reduce) {
+			.intro,
+			.row,
+			.status,
+			.ghost {
+				animation-duration: 0.2s;
+				animation-delay: 0ms !important;
+			}
+			.intro,
+			.row,
+			.status {
+				transform: none;
+			}
 			.cursor {
 				animation: none;
 			}

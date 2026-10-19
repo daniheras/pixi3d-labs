@@ -15,7 +15,23 @@ typography:
     fontWeight: 700
     lineHeight: 1
     letterSpacing: "-0.035em"
+  ghost:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "clamp(180px, 30vw, 400px)"
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "-0.05em"
+  numeral:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "clamp(22px, 2.4vw, 32px)"
+    fontWeight: 700
   body:
+    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
+    fontSize: "16px"
+    fontWeight: 400
+    lineHeight: 1.6
+    letterSpacing: "normal"
+  intro:
     fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
     fontSize: "15px"
     fontWeight: 400
@@ -27,12 +43,6 @@ typography:
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "normal"
-  ghost:
-    fontFamily: "'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
-    fontSize: "clamp(180px, 30vw, 400px)"
-    fontWeight: 800
-    lineHeight: 1
-    letterSpacing: "-0.05em"
 rounded:
   none: "0"
 spacing:
@@ -73,7 +83,7 @@ Depth does not exist in this system and that is a choice: surfaces answer throug
 - Poster-scale mono type as the only layout device — no cards, no panels, no boxes
 - Full-bleed inverse-video bands as the interaction grammar
 - One face, one red, one ground; hairlines are the only structure
-- Warm nostalgia expressed through color and the blinking cursor, not through fake textures
+- Warm nostalgia expressed through color, the blinking cursor, and one orchestrated entrance — not through fake textures
 
 ## Colors
 
@@ -103,8 +113,10 @@ A three-voice palette: a warm near-black ground, one red with a bright end, and 
 ### Hierarchy
 - **Display** (700, clamp(44px, 7.5vw, 92px), line-height 1, tracking −0.035em): index row names — the page's whole message.
 - **Ghost** (800, clamp(180px, 30vw, 400px), 1px red stroke at 14% alpha, fill transparent): the outline "3D" watermark; ornament that must never carry information.
-- **Body** (400, 15px, 1.75, ≤62ch): the intro paragraph.
-- **Label** (400, 13px, 1.6): status line, github links, suffixes at 16px on rows.
+- **Numeral** (700, clamp(22px, 2.4vw, 32px)): lab numbers inside the red squares.
+- **Body** (400, 16px, 1.6): base size — suffix metadata on rows (16px) lives here.
+- **Intro** (400, 15px, 1.75, ≤62ch; 14px under 720px): the intro paragraph.
+- **Label** (400, 13px, 1.6; mobile suffix 12px): status line, github links.
 
 ### Named Rules
 **The One Voice Rule.** JetBrains Mono is the only face, self-hosted; no second typeface enters the system.
@@ -119,6 +131,7 @@ Flat by conviction. The system carries no shadows at all; depth is expressed as 
 
 ### Named Rules
 **The Flat Phosphor Rule.** No box-shadows, no gradients-as-depth. An element is either on the ground, in a red band, or outlined.
+**The One Moment Rule.** Load gets one orchestrated entrance (fade + 8px rise, 60ms stagger, ease-out); every state change after it answers instantly. Motion on hover is gated to fine pointers; the cursor blink is the only loop.
 
 ## Shapes
 
@@ -130,7 +143,9 @@ Square corners everywhere (radius 0) — the billboard is a rectangle of type. T
 The page's one component: a full-bleed flex row — numeral chip, poster name, suffix metadata.
 - **Shape:** no radius, full-bleed; padding 26px 48px; gap 36px
 - **Rest:** transparent ground; cream name (clamp 44–92px, 700, −0.035em); red chip with ink numeral (84px square); warm-gray suffix (16px, middots bound with NBSP to their left token)
-- **Hover / Focus:** full-bleed Signal Red band; name and suffix flip to ink (suffix at 0.92 alpha over red — ≥4.5:1); chip inverts to ink with bright-red numeral; `:focus-visible` shares the exact inversion plus a 1px dashed outline
+- **Hover / Focus:** full-bleed Signal Red band; name and suffix flip to ink (suffix at 0.92 alpha over red — ≥4.5:1); chip inverts to ink with bright-red numeral; `:focus-visible` shares the exact inversion plus a 1px dashed outline; `:hover` is gated behind `(hover: hover) and (pointer: fine)` — focus and the standing demo state are not
+- **Press:** `:active` answers without moving the band — chip `scale(0.94)`, name `opacity: 0.85`, `140ms var(--ease-out)` (press-feedback tier: 100–160ms)
+- **Entrance:** on load the page reads top to bottom — intro, then rows (60ms stagger), then the status line; each fades in with an 8px rise, `360ms var(--ease-out)`; the ghost watermark fades only (500ms). Reduced motion: opacity-only, 200ms, no stagger
 - **Standing state:** the last row may rest in its inverted state ("demo"), with a blinking block cursor after its suffix
 
 ### Numeral Chip
@@ -160,6 +175,7 @@ The page's one component: a full-bleed flex row — numeral chip, poster name, s
 - **Do** bind middots in narrow suffix metadata (`token\u00A0·`) so lines never open with a separator.
 - **Do** keep the ground #0b0908 and text ≥4.5:1 against it (suffix ink over red at 0.92 alpha minimum).
 - **Do** self-host the JetBrains Mono variable woff2 (`/fonts/jetbrains-mono-var.woff2`).
+- **Do** gate `:hover` motion behind `(hover: hover) and (pointer: fine)`; `:active` press feedback is ungated (a press is real on touch).
 
 ### Don't:
 - **Don't** use ASCII/box-drawing art where it carries meaning — it rendered broken in real browsers; graphics are CSS solids or nothing.
