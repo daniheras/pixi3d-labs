@@ -1,5 +1,7 @@
 ---
 // Landing — Editorial Mono Index, bolder (direction contract in .impeccable/surfaces/src-pages-index-astro.md)
+import { ClientRouter } from 'astro:transitions';
+
 const labs = [
 	{
 		num: '01',
@@ -10,10 +12,10 @@ const labs = [
 	},
 	{
 		num: '02',
-		slug: '2d3d-hybrid',
-		name: '2d3d-hybrid',
-		suffix: '2d+3d\u00A0· view3d\u00A0+\u00A02d\u00A0· beta',
-		href: '/labs/2d3d-hybrid/',
+		slug: 'voxel-wall',
+		name: 'voxel-wall',
+		suffix: 'physics\u00A0· rapier\u00A0· beta',
+		href: '/labs/voxel-wall/',
 	},
 ];
 const githubUrl = 'https://github.com/daniheras';
@@ -30,6 +32,7 @@ const githubUrl = 'https://github.com/daniheras';
 		<meta name="description" content="Two hands-on labs into the closed PixiJS 3D beta — 3D scenes and 2D+3D hybrids, one route per lab. Source open." />
 		<meta name="theme-color" content="#0b0908" />
 		<title>pixijs-3d-labs — hands-on labs for the PixiJS 3D beta</title>
+		<ClientRouter />
 	</head>
 	<body>
 		<span class="ghost" aria-hidden="true">3D</span>
@@ -47,7 +50,7 @@ const githubUrl = 'https://github.com/daniheras';
 			<h1 class="sr-only">pixijs-3d-labs — hands-on labs for the PixiJS 3D beta</h1>
 			{
 				labs.map((lab, i) => (
-					<a class:list={['row', { demo: i === labs.length - 1 }]} style={`animation-delay: ${60 + i * 60}ms`} href={lab.href} data-row={i}>
+					<a class:list={['row', { demo: i === labs.length - 1 }]} style={`view-transition-name: lab-${i + 1}; animation-delay: ${60 + i * 60}ms`} href={lab.href} data-row={i}>
 						<span class="num" aria-hidden="true">{lab.num}</span>
 						<h2 class="name">{lab.name}</h2>
 						<span class="suffix">{lab.suffix}</span>
@@ -390,15 +393,47 @@ const githubUrl = 'https://github.com/daniheras';
 				display: none;
 			}
 		}
+
+		/* arriving via view transition: the morph carries the entrance, so skip it */
+		html.swapped .intro,
+		html.swapped .row,
+		html.swapped .status,
+		html.swapped .ghost {
+			animation: none !important;
+			opacity: 1 !important;
+			transform: none !important;
+		}
+	</style>
+
+	<style is:global>
+		/* shared-element morph: the clicked row becomes the lab's standing band */
+		::view-transition-group(*) {
+			animation-duration: 360ms;
+			animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+		}
+		@media (prefers-reduced-motion: reduce) {
+			::view-transition-group(*),
+			::view-transition-image-pair(*),
+			::view-transition-old(*),
+			::view-transition-new(*) {
+				animation: none !important;
+			}
+		}
 	</style>
 </html>
 
 <script>
 	// Arrow keys move the standing inversion (and real focus) across the index
 	// rows, cycling infinitely. Enter then opens the focused lab natively.
-	const rows = [...document.querySelectorAll<HTMLAnchorElement>('a.row')];
+	// Rows are re-queried on every press: with view transitions the script runs
+	// once per session, so captured node lists would go stale after a swap.
+	function getRows(): HTMLAnchorElement[] {
+		return [...document.querySelectorAll<HTMLAnchorElement>('a.row')];
+	}
 
 	function focusRow(index: number) {
+		const rows = getRows();
+		if (rows.length === 0) return;
 		const row = rows[(index + rows.length) % rows.length];
 		for (const r of rows) r.classList.remove('demo');
 		row.classList.add('demo');
@@ -412,9 +447,16 @@ const githubUrl = 'https://github.com/daniheras';
 		}
 		if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
 
+		const rows = getRows();
+		if (rows.length === 0) return;
 		const current = rows.findIndex((r) => r.classList.contains('demo'));
 		const delta = e.key === 'ArrowDown' ? 1 : -1;
 		focusRow((current === -1 ? 0 : current) + delta);
 		e.preventDefault();
+	});
+
+	// arriving via view transition: the morph carries the entrance, so skip it
+	document.addEventListener('astro:after-swap', () => {
+		document.documentElement.classList.add('swapped');
 	});
 </script>
