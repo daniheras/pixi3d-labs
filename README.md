@@ -1,5 +1,5 @@
 # pixijs-3d-labs
 
-Laboratorios para experimentar con la beta de PixiJS 3D.
+Labs for experimenting with the PixiJS 3D beta.
 
-Landing construida con [Astro](https://astro.build) que enlaza a cada lab, con una pequeña preview. Cada lab vive dentro de este mismo proyecto.
+A landing page built with [Astro](https://astro.build) that links to each lab, with a small preview. Each lab lives inside this same project.

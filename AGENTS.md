@@ -1,3 +1,7 @@
+## Language
+
+All code and comments that produce external output must be written in English. This includes source code, code comments, commit messages, documentation, UI copy, and any other user-facing or shared output.
+
 ## Development
 
 When starting the dev server, use background mode:
