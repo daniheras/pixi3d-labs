@@ -24,12 +24,13 @@ A documented plan (no implementation code) for `pixijs-3d-labs`: an Astro landin
 - [Standing Row, unframed (lab page design)](issues/07-prototype-lab-page-design.md): the lab opens as its own index row standing inverted; the live scene floats centered on clean ink — no canvas chrome; the 4:3 framed-viewport norm was retracted by the user before the build.
 - [Index → lab view transitions](issues/08-prototype-index-lab-transitions.md): shared-element morph (row → standing band, 360ms world ease-out) via Astro `<ClientRouter />`; hello-cube lab is real — `@pixi/3d` 0.1.0-beta.2 installed from the mirror tarball; rounded-box generator in `src/labs/rounded-box.ts`; re-entry lifecycle fixed (`astro:page-load`/`before-swap`).
 - [Shared lab shell API](issues/04-grilling-lab-shell-api.md): two layers — document-owning `src/layouts/LabLayout.astro` + `src/labs/shell.ts` whose `mountLab(host, scene)` owns the renderer lifecycle (init, app-level resize, astro events, dedupe, cleanup, failure line, `?static` capture mode, backend truth via `[data-lab-backend]`); labs are scene objects (`setup`/optional `update`/`dispose`) creating their own View3D(s) via `createView3D` (ink environment defaults, per-view sizing lab-side); camera and reduced-motion policy are lab-side; geometry helpers at `src/labs/geometry.ts`. ADR 0001; unblocks ticket 05.
+- [First two labs: spec](issues/05-grilling-first-labs-spec.md): hello-cube (lab 01) is the minimal proof — the prototype scene adopted as spec, red cube as the in-scene subject, hands-off; views-in-2d (lab 02) is the positioning claim — three inset plates in a centered row (metal torus knot, transmissive glass capsule, red toon sphere) with plain mono captions and per-view orbit, no post-processing; both labs freeze at pose zero under reduced motion and for `?static` capture; spec pins shape, implementation owns the decimals.
 
 ## Not yet specified
 
 - Deployment target (Vercel / Netlify / GitHub Pages) — decide once the plan's build story is clear.
 - Bundle / perf strategy for the beta (lazy backend chunks, per-lab code-splitting) — pin once the plan's build story is clear.
-- Additional labs beyond the first two — graduates once the first two specs exist.
+- Additional labs beyond the first two — the first two specs now exist (ticket 05); labs 3+ (refraction piece, 3D+2D HUD are standing candidates) open as a future effort once the plan is locked.
 
 ## Out of scope
 
