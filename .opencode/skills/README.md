@@ -22,6 +22,15 @@ Run `/setup-matt-pocock-skills` once to configure the issue tracker, triage labe
 
 The 16 user-invoked skills are also exposed as `/matt:<name>` commands (e.g. `/matt:implement`), defined in `.opencode/opencode.jsonc`.
 
+## emilkowalski/skills
+
+These skills are vendored from [emilkowalski/skills](https://github.com/emilkowalski/skills) (MIT, see `LICENSE-emilkowalski`).
+
+- Source commit: `2d228630ba1446365f614a108cb8252f1feda202`
+- All 15 skills under `skills/` are included as-is: `emil-design-eng`, `animate`, `animate-expo`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-performance`, `animation-vocabulary`, `apple-design`, `write-swift`, `pick-ui-library`, `mobile-native`, `break-ui`, `ask-sonner`.
+- `prototype` collided with mattpocock's skill of the same name, so it is vendored as `emil-prototype/` (its frontmatter `name` was changed to match).
+- The 15 skills are exposed as `/emil:<name>` commands (e.g. `/emil:animate`), also defined in `.opencode/opencode.jsonc`.
+
 ## Impeccable
 
 The `impeccable` skill is installed and updated through its own installer, not vendored by hand.

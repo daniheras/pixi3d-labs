@@ -64,6 +64,66 @@
     "matt:wayfinder": {
       "description": "Plan a huge chunk of work as a map of decision tickets",
       "template": "Use the skill tool to load the \"wayfinder\" skill and follow its instructions."
+    },
+    "emil:design-eng": {
+      "description": "Emil Kowalski's UI polish: component design, animation decisions, invisible details",
+      "template": "Use the skill tool to load the \"emil-design-eng\" skill and follow its instructions."
+    },
+    "emil:animate": {
+      "description": "Build an animation from scratch: purpose, tool, properties, curve, duration",
+      "template": "Use the skill tool to load the \"animate\" skill and follow its instructions."
+    },
+    "emil:animate-expo": {
+      "description": "Animations in React Native / Expo: gestures, sheets, haptics, screen transitions",
+      "template": "Use the skill tool to load the \"animate-expo\" skill and follow its instructions."
+    },
+    "emil:review-animations": {
+      "description": "Strict review of your animations against the rules",
+      "template": "Use the skill tool to load the \"review-animations\" skill and follow its instructions."
+    },
+    "emil:improve-animations": {
+      "description": "Audit all animations in the codebase into prioritized, self-contained plans",
+      "template": "Use the skill tool to load the \"improve-animations\" skill and follow its instructions."
+    },
+    "emil:find-animation-opportunities": {
+      "description": "Find where motion genuinely helps — and what not to animate",
+      "template": "Use the skill tool to load the \"find-animation-opportunities\" skill and follow its instructions."
+    },
+    "emil:animation-performance": {
+      "description": "Fix animations that drop frames; keep motion inside the frame budget",
+      "template": "Use the skill tool to load the \"animation-performance\" skill and follow its instructions."
+    },
+    "emil:animation-vocabulary": {
+      "description": "Name the motion effect you're picturing with the exact term",
+      "template": "Use the skill tool to load the \"animation-vocabulary\" skill and follow its instructions."
+    },
+    "emil:apple-design": {
+      "description": "Apple's interface design and motion principles, translated for the web",
+      "template": "Use the skill tool to load the \"apple-design\" skill and follow its instructions."
+    },
+    "emil:write-swift": {
+      "description": "Modern Swift: value types, Swift 6 concurrency, generics, performance, testing",
+      "template": "Use the skill tool to load the \"write-swift\" skill and follow its instructions."
+    },
+    "emil:pick-ui-library": {
+      "description": "Pick the right UI library from trusted options instead of hand-rolling",
+      "template": "Use the skill tool to load the \"pick-ui-library\" skill and follow its instructions."
+    },
+    "emil:prototype": {
+      "description": "Build multiple versions of a UI piece and flip through them with a live switcher",
+      "template": "Use the skill tool to load the \"emil-prototype\" skill and follow its instructions."
+    },
+    "emil:mobile-native": {
+      "description": "Make a web app feel native on a phone: hover, tap highlight, 100vh, safe areas",
+      "template": "Use the skill tool to load the \"mobile-native\" skill and follow its instructions."
+    },
+    "emil:break-ui": {
+      "description": "Break the UI with worst-case data and report everything that breaks",
+      "template": "Use the skill tool to load the \"break-ui\" skill and follow its instructions."
+    },
+    "emil:ask-sonner": {
+      "description": "Working with Sonner toasts: setup, styling, recipes, common fixes",
+      "template": "Use the skill tool to load the \"ask-sonner\" skill and follow its instructions."
     }
   }
 }
