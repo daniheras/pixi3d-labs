@@ -26,7 +26,7 @@ World pinned by the user: Omarchy/TUI-inspired — near-black warm ground (#0b09
 THESIS: the index IS the interface — two lines of poster-scale mono type, refusing the card-grid and terminal-replica defaults of a lab portfolio.
 OWN-WORLD: near-black warm ground; red owns the accent layer (numeral squares, inverse bars, links); cream display mono at poster sizes; dim warm gray for secondary; hairline #2a1f1a rules; square corners.
 STORY: the visitor understands "two hands-on labs into the closed PixiJS 3D beta", believes the source is open and the thing is live, and opens a lab.
-FIRST VIEWPORT: top bar (wordmark left, github right); one intro line (15px dim, max 62ch); the two index rows — 84px red numeral squares + 88px names + suffix metadata; row 02 rendered in its inverted hover state with blinking cursor; ghost outline "3D" upper-right; status line pinned at the bottom edge.
+FIRST VIEWPORT: top bar (wordmark only — one github link total, in the status line); one intro line (15px dim, max 62ch); the two index rows — 84px red numeral squares + 88px names + suffix metadata; row 02 rendered in its inverted hover state with the page's single blinking cursor; ghost outline "3D" upper-right; status line pinned at the bottom edge.
 FORM: Editorial Mono Index, dealt candidate 4 of the second hand (seed: 9a082991428ac9c9).
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 

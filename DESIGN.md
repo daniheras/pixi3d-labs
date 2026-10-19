@@ -154,7 +154,7 @@ The page's one component: a full-bleed flex row — numeral chip, poster name, s
 
 ### Status Line
 - **Shape:** full-width flex, 1px Hairline top border, padding 14px 48px 18px
-- **Type:** Label 13px in Warm Gray; content: `labs: n · status: beta`, `↵ open` (desktop only), github link, blinking block cursor
+- **Type:** Label 13px in Warm Gray; content: `labs: n · status: beta`, `↵ open` (desktop only), github link — the page's ONLY github link (header carries the wordmark alone) and the page's ONLY cursor lives in the index, not here
 
 ### Wordmark
 - **Type:** 15–17px, 700, tracking −0.02em; the "3d" in Signal Red
