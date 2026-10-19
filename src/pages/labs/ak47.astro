@@ -1,0 +1,24 @@
+---
+// Lab 03 — ak47 (first asset-backed lab: FBX → glTF, served from public/models)
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const description =
+	'Lab 03 — ak47: the first lab fed by a real asset — a low-poly AK47 converted from FBX to glTF, hanging in the dark under a failing bulb. Rendered webgpu-first, fallback webgl.';
+const sourceUrl = 'https://github.com/daniheras/pixi3d-labs/tree/main/src/labs/ak47';
+---
+
+<LabLayout
+	num="03"
+	name="ak47"
+	suffix="3d&#8202;·&#8202;gltf&#8202;·&#8202;beta"
+	description={description}
+	sourceUrl={sourceUrl}
+/>
+
+<script>
+	// the shell owns the lifecycle; the page only mounts the scene
+	import { mountLab } from '../../labs/core/shell';
+	import { createAk47Scene } from '../../labs/ak47/scene';
+
+	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, createAk47Scene());
+</script>

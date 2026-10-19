@@ -202,6 +202,7 @@ const vtName = label ?? `lab-${Number(num)}`;
 			height: 100%;
 			display: block;
 			touch-action: none;
+			-webkit-tap-highlight-color: transparent; /* the reveal is the feedback, not a gray flash */
 		}
 		.stage :global([data-lab-failure]) {
 			position: absolute;
