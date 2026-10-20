@@ -28,6 +28,7 @@ const SHOTS = [
 	{ name: 'voxel-wall', url: '/labs/voxel-wall/?t=1600', ready: 'canvas' }, // the impact bite
 	{ name: 'ak47', url: '/labs/ak47/?static', ready: 'canvas' },
 	{ name: 'interaction', url: '/labs/interaction/?static', ready: 'canvas' },
+	{ name: 'hordes', url: '/labs/hordes/?static', ready: 'canvas' }, // the mid-horde ring
 ];
 
 const browser = await puppeteer.launch({

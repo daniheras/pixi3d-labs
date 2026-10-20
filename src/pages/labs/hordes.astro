@@ -1,0 +1,24 @@
+---
+// Lab 05 — hordes: bitecs survival stress test. Page mounts the scene; the shell owns lifecycle.
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const description =
+	'Lab 05 — hordes: a mini vampire-survivors on the @pixi/3d beta — bitecs drives thousands of enemies chasing one red sphere. Webgpu-first, fallback webgl.';
+const sourceUrl = 'https://github.com/daniheras/pixi3d-labs/tree/main/src/labs/hordes';
+---
+
+<LabLayout
+	num="05"
+	name="hordes"
+	suffix="ecs&#8202;·&#8202;bitecs&#8202;·&#8202;beta"
+	description={description}
+	sourceUrl={sourceUrl}
+/>
+
+<script>
+	// the shell owns the lifecycle; the page only mounts the scene (ADR 0001)
+	import { mountLab } from '../../labs/core/shell';
+	import { createHordesScene } from '../../labs/hordes/scene';
+
+	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, createHordesScene());
+</script>

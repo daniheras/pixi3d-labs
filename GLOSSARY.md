@@ -59,3 +59,39 @@ _Avoid_: pre-render, compile, cache
 **Phase**:
 A named segment of a Timeline (`approach`, `impact`, `settled`…), reported by the Player and shown in the status line's readout.
 _Avoid_: state, stage, step
+
+**Horde lab**:
+Lab 05 (`hordes`): the bitecs survival stress test — one player sphere, thousands of chase enemies, an 8-way volley boost, all bounded by an entity cap.
+_Avoid_: survivors lab, vampire lab, shooter lab
+
+**ECS world / bundle**:
+Lab-confined bitecs world plus its preallocated mesh pools and the director state, built by `createHordeBundle`. `core/` never touches it; the same builder serves setup and the game-over restart.
+_Avoid_: scene graph (that's the Pixi side), store, globals
+
+**Mesh pool**:
+One `Mesh3D` per slot with its own material instance, all mounted up-front and visible only while a slot is busy — the beta's scene batch compacts hidden meshes out of the draw lists.
+_Avoid_: object cache, cloning, on-demand creation
+
+**Spawn director / Fire director**:
+The timer-state systems that decide how enemies arrive (batch grows every N seconds, walls rotate in spawn order) and how shots leave the player (nearest-enemy threshold, 8-way volley under boost). They read/write the bundle's DirectorState, never the renderer.
+_Avoid_: spawner, turret logic, AI
+
+**Dying state**:
+The 150 ms hit-flash window an enemy enters when a bullet lands: own-material tint + render-side positional jitter (ECS physics untouched); recycling happens at expiry. Cap-recycles and game wipes recycle instantly with no FX.
+_Avoid_: death animation, corpse, ragdoll
+
+**Entity cap**:
+The hard 2 000-alive-enemy bound: once the pool runs dry the oldest non-dying enemy recycles instantly, so the spawn ramp keeps ramping against a bounded, repeatable budget.
+_Avoid_: max enemies, limit, kill switch
+
+**Spatial hash grid**:
+The rebuilt-every-frame uniform grid the two collision queries and the fire director's nearest-enemy threshold ask — squared distances only, sqrt off the table.
+_Avoid_: broadphase, physics grid, octree
+
+**Boost volley**:
+What a yellow pickup grants: for its duration every shot leaves as a radial 8-bullet pattern (spoke 0 aimed at the nearest enemy, 45° apart, cadence unchanged).
+_Avoid_: spread shot, rapid fire (that was the retired ×2.5 semantics), power-up burst
+
+**Synthetic seeding**:
+What `?static` does to this lab instead of photographing an empty arena: the spawn director deterministically seeds ~300 enemies around the player plus bullets in flight and one pickup, then the shell photographs the one fixed-delta frame.
+_Avoid_: mocked state, fake world, pre-baked capture
