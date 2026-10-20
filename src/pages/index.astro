@@ -36,9 +36,9 @@ const githubUrl = 'https://github.com/daniheras/pixi3d-labs';
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Three hands-on labs into the closed PixiJS 3D beta — 3D scenes and 2D+3D hybrids, one route per lab. Source open." />
+		<meta name="description" content="A playground of labs to play with PixiJS 3D — small, self-contained 3D scenes and 2D+3D hybrids, one route per lab. Source open." />
 		<meta name="theme-color" content="#0b0908" />
-		<title>pixijs-3d-labs — hands-on labs for the PixiJS 3D beta</title>
+		<title>pixijs-3d-labs — labs to play with PixiJS 3D</title>
 		<ClientRouter />
 	</head>
 	<body>
@@ -49,12 +49,12 @@ const githubUrl = 'https://github.com/daniheras/pixi3d-labs';
 		</header>
 
 		<p class="intro">
-			Three labs into the closed <span class="lit">@pixi/3d</span> beta — small, self-contained,
+			A playground of labs to play with <span class="lit">@pixi/3d</span> — small, self-contained,
 			one route each. Rendered webgpu-first, fallback webgl. Source open.
 		</p>
 
 		<main class="index">
-			<h1 class="sr-only">pixijs-3d-labs — hands-on labs for the PixiJS 3D beta</h1>
+			<h1 class="sr-only">pixijs-3d-labs — labs to play with PixiJS 3D</h1>
 			{
 				labs.map((lab, i) => (
 					<a class:list={['row', { demo: i === labs.length - 1 }]} style={`view-transition-name: lab-${i + 1}; animation-delay: ${60 + i * 60}ms`} href={lab.href} data-row={i}>
