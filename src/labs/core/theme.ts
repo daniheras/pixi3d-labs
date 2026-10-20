@@ -1,7 +1,7 @@
 // Shared theme: the house palette and a repeatable light rig. Both labs hang the same
 // warm key / red rim / warm ambient setup at different scales — express it once as data
 // and let each lab's config own the numbers.
-import { AmbientLight, type Container3D, DirectionalLight } from '@pixi/3d';
+import { AmbientLight, Box, type Container3D, DirectionalLight } from '@pixi/3d';
 
 /** The lab palette (ADR 0001): ink void, Signal Red accent, cream neutrals. */
 export const PALETTE = {
@@ -28,7 +28,15 @@ export interface LightRigConfig {
 		color?: number;
 		intensity: number;
 	};
-	key: { color?: number; intensity: number; position: [number, number, number] };
+	key: {
+		color?: number;
+		intensity: number;
+		position: [number, number, number];
+		/** Whether the key casts shadows; default false — existing rigs are untouched. */
+		castShadow?: boolean;
+		/** World-space box the shadow covers (center + full size); read only when castShadow. */
+		shadow?: { center?: [number, number, number]; size: number };
+	};
 	rim: { color?: number; intensity: number; position: [number, number, number] };
 }
 
@@ -42,7 +50,29 @@ export function addLightRig(root: Container3D, rig: LightRigConfig): void {
 		new AmbientLight({ color: rig.ambient.color ?? PALETTE.lightWarm, intensity: rig.ambient.intensity }),
 	);
 
-	const key = new DirectionalLight({ color: rig.key.color ?? PALETTE.lightKey, intensity: rig.key.intensity });
+	// shadows are opt-in on the key only: the rig's comment contract is a three-way fill,
+	// and a casting rim would double the shadow passes for no read
+	const shadow =
+		rig.key.castShadow && rig.key.shadow
+			? {
+					castShadow: true,
+					shadow: {
+						bounds: Box.fromCenterSize(
+							{
+								x: rig.key.shadow.center?.[0] ?? 0,
+								y: rig.key.shadow.center?.[1] ?? 0,
+								z: rig.key.shadow.center?.[2] ?? 0,
+							},
+							rig.key.shadow.size,
+						),
+					},
+				}
+			: {};
+	const key = new DirectionalLight({
+		color: rig.key.color ?? PALETTE.lightKey,
+		intensity: rig.key.intensity,
+		...shadow,
+	});
 	key.position.set(...rig.key.position);
 	key.lookAt({ x: 0, y: 0, z: 0 });
 	root.addChild(key);

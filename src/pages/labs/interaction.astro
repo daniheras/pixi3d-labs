@@ -1,0 +1,24 @@
+---
+// Lab 04 — interaction (spec in .scratch/interaction/spec.md)
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const description =
+	'Lab 04 — interaction: Monument Valley hops — a red sphere hopping cube to cube along an L of floating cubes, orthographic. Click again mid-journey and it re-plans. Rendered webgpu-first, fallback webgl.';
+const sourceUrl = 'https://github.com/daniheras/pixi3d-labs/tree/main/src/labs/interaction';
+---
+
+<LabLayout
+	num="04"
+	name="interaction"
+	suffix="input&#8202;·&#8202;picking&#8202;·&#8202;beta"
+	description={description}
+	sourceUrl={sourceUrl}
+/>
+
+<script>
+	// the shell owns the lifecycle; the page only mounts the scene (ticket 04)
+	import { mountLab } from '../../labs/core/shell';
+	import { createInteractionScene } from '../../labs/interaction/scene';
+
+	mountLab(document.querySelector<HTMLElement>('[data-lab-stage]')!, createInteractionScene());
+</script>
