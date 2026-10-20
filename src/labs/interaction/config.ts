@@ -37,6 +37,14 @@ export const INTERACTION = {
 		fadeMs: 150,
 	},
 
+	/** Touch has no hover (spec): a tap flashes the selected cube toward redBright — fast
+	 * attack, brief hold, easy release. Mouse taps skip it; their hover already covers. */
+	tapPulse: {
+		attackMs: 90,
+		holdMs: 220,
+		releaseMs: 260,
+	},
+
 	/** The subject: Signal Red, resting on the first cube of the chain. */
 	sphereGeometry: { radius: 0.33, widthSegments: 48, heightSegments: 32 },
 	sphereMaterial: { baseColor: PALETTE.red, metallic: 0.05, roughness: 0.35 },

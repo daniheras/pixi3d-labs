@@ -17,6 +17,7 @@ import { INTERACTION, PATH_LENGTH, PATH_SPACING } from './config';
 
 const HOP = INTERACTION.hop;
 const HOVER = INTERACTION.hover;
+const PULSE = INTERACTION.tapPulse;
 const CAM = INTERACTION.camera;
 const CUBE_HALF = INTERACTION.path.cubeSize / 2;
 const SPHERE_R = INTERACTION.sphereGeometry.radius;
@@ -35,6 +36,15 @@ function cubeCenter(i: number): { x: number; y: number; z: number } {
 /** Strong ease-out, config exponent: progress = 1 − (1 − t)^n — fast launch, soft arrival. */
 function easeOut(t: number, n: number): number {
 	return 1 - Math.pow(1 - t, n);
+}
+
+/** Tap-pulse level in [0, 1] for the selected cube: fast attack, brief hold, release that
+ * exits fast and lands soft (exit faster than enter — the selection must read at once). */
+function pulseLevel(t: number): number {
+	if (t <= PULSE.attackMs) return t / PULSE.attackMs;
+	if (t <= PULSE.attackMs + PULSE.holdMs) return 1;
+	const u = Math.min((t - PULSE.attackMs - PULSE.holdMs) / PULSE.releaseMs, 1);
+	return 1 - easeOut(u, 2);
 }
 
 /** Linear-space rgb mix for the hover tint (hex colors in, hex color out). */
@@ -67,6 +77,10 @@ export function createInteractionScene(): LabScene {
 	/** Per-cube hover tint progress in [0, 1]. */
 	let hoverIndex: number | null = null;
 	const hoverT = new Array<number>(PATH_LENGTH).fill(0);
+	/** Last tint level written per cube — skips material writes when nothing moved. */
+	const tintK = new Array<number>(PATH_LENGTH).fill(0);
+	/** The one tapped cube flashing its selection (touch, no hover); null when idle. */
+	let tapPulse: { index: number; t: number } | null = null;
 
 	const beginHop = (): void => {
 		if (target === null || target === at) {
@@ -220,6 +234,9 @@ export function createInteractionScene(): LabScene {
 				view.on('pointertap', (e) => {
 					const idx = pick(e);
 					if (idx === null || !ctx) return;
+					// touch has no hover and no cursor: the tap's own flash is its feedback
+					const isTouch = e.pointerType !== 'mouse';
+					if (isTouch) tapPulse = { index: idx, t: 0 };
 					if (ctx.reducedMotion) {
 						// no hops: teleport with one gentle settle (spec — fewer and gentler)
 						at = idx;
@@ -261,12 +278,22 @@ export function createInteractionScene(): LabScene {
 			}
 			applyPose();
 
-			// hover tint: color only — it stays on under reduced motion
+			// hover + tap-pulse tint: color only — it stays on under reduced motion
+			if (tapPulse) {
+				tapPulse.t += dt;
+				if (tapPulse.t >= PULSE.attackMs + PULSE.holdMs + PULSE.releaseMs) tapPulse = null;
+			}
 			for (let i = 0; i < PATH_LENGTH; i++) {
 				const goal = i === hoverIndex ? 1 : 0;
-				if (hoverT[i] === goal) continue;
-				hoverT[i] = Math.min(1, Math.max(0, hoverT[i] + (goal === 1 ? dt : -dt) / HOVER.fadeMs));
-				cubeMaterials[i].baseColor = mixColor(PALETTE.cream, HOVER.color, easeOut(hoverT[i], 2));
+				if (hoverT[i] !== goal) {
+					hoverT[i] = Math.min(1, Math.max(0, hoverT[i] + (goal === 1 ? dt : -dt) / HOVER.fadeMs));
+				}
+				let k = easeOut(hoverT[i], 2);
+				if (tapPulse && tapPulse.index === i) k = Math.max(k, pulseLevel(tapPulse.t));
+				if (k !== tintK[i]) {
+					tintK[i] = k;
+					cubeMaterials[i].baseColor = mixColor(PALETTE.cream, HOVER.color, k);
+				}
 			}
 		},
 
@@ -279,6 +306,8 @@ export function createInteractionScene(): LabScene {
 			sphere = null;
 			hoverIndex = null;
 			hoverT.fill(0);
+			tintK.fill(0);
+			tapPulse = null;
 			target = null;
 			motion = { kind: 'rest' };
 			settle = null;

@@ -27,6 +27,7 @@ target.
 | Q10 | Shadows | Try them (directional key light, fixed shadow bounds — the beta supports it); drop without drama if the beta misbehaves |
 | Q11 | Color | Cream cubes (matte, voxel-wall material recipe); the sphere is the scene's only Signal Red (ADR 0001); hover tint = `redBright` |
 | Q12 | Process | This spec first, then implementation, verify on the dev server |
+| Q13 | Touch tap feedback | No hover on touch → a tap flashes the selected cube toward `redBright` (90 ms attack, 220 ms hold, 260 ms release); mouse taps skip it — hover already covers |
 
 ## Animation values (Emil Kowalski framework)
 
@@ -71,6 +72,7 @@ immediate. Purpose: feedback + spatial consistency + delight.
   landed the in-flight hop on the corner cube, then re-planned home.)
 - [x] No-op cases (Q5 a/b) — objective-derived tap rule; inspected + exercised implicitly.
 - [x] Hover tints a cube toward redBright (~150 ms) with pointer cursor; touch skips hover.
+- [x] Touch tap flashes the selected cube (tap pulse, Q13) — no hover needed for feedback.
 - [x] Reduced motion teleports; `?static` renders pose zero reproducibly (verified: sphere on
   the first cube, no hover tint, one frame).
 - [x] Shadows render (or are cleanly dropped): rendering. The key light rides high
