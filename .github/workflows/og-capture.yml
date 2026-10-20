@@ -1,0 +1,75 @@
+# OG card capture: re-photographs every page's OpenGraph screenshot into
+# public/og/*.png and commits them straight to main when a run changes them.
+#
+# why this exists: the cards are real screenshots of live WebGL scenes, so they
+# decay as scenes evolve; this keeps the published cards true with zero manual
+# work. timing budget is ~3-4 min on a standard runner — free on public repos.
+#
+# commits are made with GITHUB_TOKEN and carry [skip ci], so they never re-trigger
+# this workflow (no capture loop). trigger manually from the Actions tab whenever.
+
+name: og-capture
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/fonts/**'
+      - 'public/models/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'astro.config.mjs'
+  workflow_dispatch: # manual "recapture" button
+
+concurrency:
+  group: og-capture
+  cancel-in-progress: true
+
+permissions:
+  contents: write # push the recaptured cards
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build + serve
+        run: |
+          npm run build
+          npx astro preview --port 4400 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:4400/ > /dev/null && break
+            sleep 1
+          done
+          curl -sf http://localhost:4400/ > /dev/null
+
+      - name: Capture OG screenshots
+        run: node scripts/capture-og.mjs http://localhost:4400
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+
+      - name: Commit changed cards
+        run: |
+          if git diff --quiet -- public/og; then
+            echo "no card changed — nothing to commit"
+            exit 0
+          fi
+          git config user.name "og-capture[bot]"
+          git config user.email "og-capture[bot]@users.noreply.github.com"
+          git add public/og
+          git commit -m "chore(og): recapture screenshots [skip ci]"
+          git push

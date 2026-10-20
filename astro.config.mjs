@@ -2,4 +2,5 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({});
+// absolute base for the OG image/tags URLs (wrangler custom domain)
+export default defineConfig({ site: 'https://labs.daniheras.dev' });
