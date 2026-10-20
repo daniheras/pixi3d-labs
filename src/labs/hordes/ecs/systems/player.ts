@@ -24,22 +24,32 @@ export interface KeyState {
 	right: boolean;
 }
 
-/**
- * Set the player's velocity from the WASD/arrows state; diagonal input normalizes.
- * Axis truth (verified against the live camera): on screen right = +x world, and
- * top-of-screen = −y world (the camera sits on +Z looking toward −Z) — so `forward`
- * subtracts from the world-plane y while `right` adds to x.
- */
-export function playerInput(bundle: HordeBundle, keys: KeyState): void {
-	const eid = bundle.playerEid;
+/** Analog movement axis, normalized to magnitude ≤ 1, screen sense (y-down). */
+export interface MoveAxis {
+	x: number;
+	y: number;
+}
+
+/** Screen-sense axis from the keys: right = +x world, forward = −y world (camera truth). */
+export function keyboardAxis(keys: KeyState): MoveAxis {
 	let x = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
 	let y = (keys.back ? 1 : 0) - (keys.forward ? 1 : 0);
 	if (x !== 0 && y !== 0) {
 		x *= Math.SQRT1_2;
 		y *= Math.SQRT1_2;
 	}
-	Velocity.x[eid] = x * HORDES.player.speed;
-	Velocity.y[eid] = y * HORDES.player.speed;
+	return { x, y };
+}
+
+/**
+ * Set the player's velocity from the (already merged) move axis; diagonals keep their
+ * length — the keyboard normalizes itself and the joystick is analog by design, so a
+ * half-tilt walks slower exactly like a thumb implies.
+ */
+export function playerInput(bundle: HordeBundle, move: MoveAxis): void {
+	const eid = bundle.playerEid;
+	Velocity.x[eid] = move.x * HORDES.player.speed;
+	Velocity.y[eid] = move.y * HORDES.player.speed;
 }
 
 /** Advance the player's singleton timers: boost, hurt flash, invulnerability. */

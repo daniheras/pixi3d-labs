@@ -115,7 +115,7 @@ src/pages/index.astro         # labs array gets entry 05
 | Parameter | Value |
 |---|---|
 | Player speed | 9 u/s, radius 1 (diagonal input normalized) |
-| Input | WASD + arrow keys, no touch |
+| Input | WASD + arrow keys; mobile gets a floating virtual joystick (analog, spawns under the thumb, touch-pointers only) |
 | Enemy scale / speed | ~0.7 / 2.5 u/s, ramping up to 4.5 u/s over 60s per-enemy age |
 | Spawn cadence | every 0.8s, batch of 4 initially, **+1 enemy per batch every 20s** (level from the game clock), rotating 4 walls |
 | Fire cadence / threshold | every 0.4s; nearest-enemy threshold 16u |
@@ -132,6 +132,6 @@ src/pages/index.astro         # labs array gets entry 05
 
 - No swarm separation/steering between enemies.
 - No instancing/batching renderer.
-- No camera follow, no mobile/touch input.
+- No camera follow.
 - No bullet re-targeting or homing.
 - No HP for enemies (1-hit kills; if shielded/hp design ever wanted, that is another lab).

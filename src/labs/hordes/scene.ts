@@ -9,8 +9,9 @@ import { createView3D } from '../core/world';
 import type { LabContext, LabScene } from '../core/shell';
 import { HORDES } from './config';
 import { createHud, type Hud } from './ecs/hud';
-import { renderSync, stepStatic, stepWorld, type KeyState } from './ecs/systems/step';
+import { renderSync, stepStatic, stepWorld, keyboardAxis, type KeyState } from './ecs/systems/step';
 import { createHordeBundle, destroyHordeBundle, type HordeBundle } from './ecs/world';
+import { attachJoystick, type VirtualJoystick } from './joystick';
 
 /** Seed for the ?static capture frame: a constant, so captures replay identically. */
 const STATIC_SEED = 20260412;
@@ -36,6 +37,7 @@ export function createHordesScene(): LabScene {
 	/** Held listeners, for idempotent setup re-entry (the shell may re-run setup). */
 	let down: ((e: KeyboardEvent) => void) | null = null;
 	let up: ((e: KeyboardEvent) => void) | null = null;
+	let joystick: VirtualJoystick | null = null;
 	/** Remaining game-over banner seconds; null means the banner isn't up. */
 	let bannerTimer: number | null = null;
 
@@ -82,8 +84,9 @@ export function createHordesScene(): LabScene {
 			hud = createHud(context);
 			if (context.static) hud.elem.hidden = true; // the capture shows the game, not the HUD
 
-			// idempotent attach: any prior listener pair comes off before the new one
+			// touch input: a floating thumb-stick on the stage (desktop pointers ignore it)
 			detachKeys();
+			joystick = attachJoystick(context.host);
 			down = (e) => {
 				const dir = KEY_MAP[e.code];
 				if (dir) keys[dir] = true;
@@ -121,7 +124,12 @@ export function createHordesScene(): LabScene {
 				return;
 			}
 
-			stepWorld(bundle, keys, dt);
+			// the joystick is analog and always present once a finger is down; the keys it
+			// replaces otherwise — merging means a thumb takes over for the held WASD
+			const stick = joystick?.axis;
+			const move =
+				stick && (stick.x !== 0 || stick.y !== 0) ? stick : keyboardAxis(keys);
+			stepWorld(bundle, move, dt);
 			renderSync(bundle, ctx.reducedMotion);
 
 			if (bundle.director.gameOver) {
@@ -134,6 +142,10 @@ export function createHordesScene(): LabScene {
 
 		dispose() {
 			detachKeys();
+			if (joystick) {
+				joystick.dispose();
+				joystick = null;
+			}
 			if (hud) {
 				hud.dispose();
 				hud = null;

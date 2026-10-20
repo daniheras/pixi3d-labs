@@ -7,7 +7,7 @@ import { query } from 'bitecs';
 import { Bullet, Enemy, Player } from '../components';
 import type { HordeBundle } from '../world';
 import { rebuildGrid } from './spatial-hash';
-import { playerInput, playerTimers, fireDirector, type KeyState } from './player';
+import { keyboardAxis, playerInput, playerTimers, fireDirector, type MoveAxis } from './player';
 import { seekEnemies, moveEntities } from './enemies';
 import { spawnDirector, pickupRoll, seedStaticFrame } from './spawn';
 import {
@@ -21,11 +21,11 @@ import { renderSync } from './render';
 
 /** Re-exported so scenes need exactly one import from ./ecs/systems. */
 export { renderSync } from './render';
-
-export type { KeyState } from './player';
+export { keyboardAxis } from './player';
+export type { KeyState, MoveAxis } from './player';
 
 /** Advance the whole simulation one tick, in the pipeline order above. */
-export function stepWorld(bundle: HordeBundle, keys: KeyState, dt: number): void {
+export function stepWorld(bundle: HordeBundle, move: MoveAxis, dt: number): void {
 	const d = bundle.director;
 	if (d.gameOver) return; // frozen between death and the scene's restart
 
@@ -34,7 +34,7 @@ export function stepWorld(bundle: HordeBundle, keys: KeyState, dt: number): void
 	spawnDirector(bundle, dt);
 	pickupRoll(bundle, dt);
 	playerTimers(bundle, dt);
-	playerInput(bundle, keys);
+	playerInput(bundle, move);
 	seekEnemies(bundle, dt);
 	moveEntities(bundle, dt);
 	rebuildGrid(bundle);
